@@ -1,0 +1,383 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>superintendent.controls &mdash; superintendent 0.2.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="superintendent 0.2.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> superintendent
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../narrative.html">Example use cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">superintendent</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>superintendent.controls</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for superintendent.controls</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Input and timing control widgets.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">total_ordering</span>
+<span class="kn">import</span> <span class="nn">traitlets</span>
+
+
+<div class="viewcode-block" id="Submitter"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.controls.Submitter">[docs]</a><span class="k">class</span> <span class="nc">Submitter</span><span class="p">(</span><span class="n">widgets</span><span class="o">.</span><span class="n">VBox</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A flexible data submission widget.</span>
+
+<span class="sd">    Submitter allows you to specifiy options, which can be chosen either via</span>
+<span class="sd">    buttons or a dropdown, and a text field for &quot;other&quot; values.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    options : list, tuple, optional</span>
+<span class="sd">        The data submission options.</span>
+<span class="sd">    max_buttons : int</span>
+<span class="sd">        The number buttons you want to display. If len(options) &gt;</span>
+<span class="sd">        max_buttons, the options will be displayed in a dropdown instead.</span>
+<span class="sd">    other_option : bool, optional</span>
+<span class="sd">        Whether the widget should contain a text box for users to type in</span>
+<span class="sd">        a value not in options.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">other_option</span> <span class="o">=</span> <span class="n">traitlets</span><span class="o">.</span><span class="n">Bool</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">traitlets</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="nb">list</span><span class="p">())</span>
+    <span class="n">max_buttons</span> <span class="o">=</span> <span class="n">traitlets</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(),</span> <span class="n">max_buttons</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">other_option</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a widget that will render submission options.</span>
+
+<span class="sd">        Note that all parameters can also be changed through assignment after</span>
+<span class="sd">        you create the widget.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        options : list, tuple, optional</span>
+<span class="sd">            The data submission options.</span>
+<span class="sd">        max_buttons : int</span>
+<span class="sd">            The number buttons you want to display. If len(options) &gt;</span>
+<span class="sd">            max_buttons, the options will be displayed in a dropdown instead.</span>
+<span class="sd">        other_option : bool, optional</span>
+<span class="sd">            Whether the widget should contain a text box for users to type in</span>
+<span class="sd">            a value not in options.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">([])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">submission_functions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_buttons</span> <span class="o">=</span> <span class="n">max_buttons</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">options</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">other_option</span> <span class="o">=</span> <span class="n">other_option</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compose</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_when_submitted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sender</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Button</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">sender</span><span class="o">.</span><span class="n">description</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;button&quot;</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Text</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">sender</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;textfield&quot;</span>
+
+        <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">submission_functions</span><span class="p">:</span>
+            <span class="n">func</span><span class="p">({</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">})</span>
+
+<div class="viewcode-block" id="Submitter.on_submission"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.controls.Submitter.on_submission">[docs]</a>    <span class="k">def</span> <span class="nf">on_submission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a function to call when the user submits a value.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        func : callable</span>
+<span class="sd">            The function to be called when the widget is submitted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">submission_functions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">)</span></div>
+
+    <span class="nd">@traitlets</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="s2">&quot;other_option&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">,</span> <span class="s2">&quot;max_buttons&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_compose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">change</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_buttons</span><span class="p">:</span>
+            <span class="n">control_elements</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">widgets</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">option</span><span class="p">))</span>
+                    <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">button</span> <span class="ow">in</span> <span class="n">control_elements</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                <span class="n">button</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_when_submitted</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">control_elements</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">widgets</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
+                        <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">option</span><span class="p">)</span> <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">],</span>
+                        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Label:&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="n">widgets</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Submit.&quot;</span><span class="p">,</span>
+                        <span class="n">tooltip</span><span class="o">=</span><span class="s2">&quot;Submit label.&quot;</span><span class="p">,</span>
+                        <span class="n">button_style</span><span class="o">=</span><span class="s2">&quot;success&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">widgets</span><span class="o">.</span><span class="n">link</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">control_elements</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="n">control_elements</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;description&quot;</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="n">control_elements</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_when_submitted</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_option</span><span class="p">:</span>
+            <span class="n">other_widget</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span>
+                <span class="n">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Other:&quot;</span><span class="p">,</span>
+                <span class="n">placeholder</span><span class="o">=</span><span class="s2">&quot;Hit enter to submit.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">other_widget</span><span class="o">.</span><span class="n">on_submit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_when_submitted</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">control_elements</span><span class="p">,</span> <span class="n">other_widget</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">control_elements</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Timer"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.controls.Timer">[docs]</a><span class="nd">@total_ordering</span>
+<span class="k">class</span> <span class="nc">Timer</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A timer object. Use as a context manager to time operations, and compare to</span>
+<span class="sd">    numerical values to run conditional code.</span>
+
+<span class="sd">    Usage:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        timer = Timer()</span>
+<span class="sd">        with timer: print(&#39;some quick computation&#39;)</span>
+<span class="sd">        if timer &lt; 1: print(&#39;quick computation took less than a second&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_time</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_t0</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time</span> <span class="o">==</span> <span class="n">other</span>
+
+    <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time</span> <span class="o">&lt;</span> <span class="n">other</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> s&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_time</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jan Freyberg.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.2.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

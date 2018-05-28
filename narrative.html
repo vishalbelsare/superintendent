@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Superintendent &mdash; superintendent 0.2.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="superintendent 0.2.1 documentation" href="index.html"/>
+        <link rel="next" title="superintendent" href="api/modules.html"/>
+        <link rel="prev" title="Superintendent documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> superintendent
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Example use cases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#use-case-1-labelling-individual-data-points">Use case 1: Labelling individual data points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#use-case-2-labelling-clusters">Use case 2: Labelling clusters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#use-case-3-labelling-images">Use case 3: labelling images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#use-case-4-labelling-clusters-of-images">Use case 4: labelling clusters of images</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">superintendent</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Superintendent</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/narrative.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="superintendent">
+<h1>Superintendent<a class="headerlink" href="#superintendent" title="Permalink to this headline">¶</a></h1>
+<a class="reference external image-reference" href="https://travis-ci.org/janfreyberg/superintendent"><img alt="Build Status" src="https://travis-ci.org/janfreyberg/superintendent.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://badge.fury.io/py/superintendent"><img alt="PyPI version" src="https://badge.fury.io/py/superintendent.svg" /></a>
+<a class="reference external image-reference" href="https://opensource.org/licenses/MIT"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" /></a>
+<hr class="docutils" />
+<a class="reference external image-reference" href="logo.png"><img alt="" src="_images/logo.png" /></a>
+<p>This package is designed to provide a <code class="docutils literal"><span class="pre">ipywidget</span></code>-based interactive labelling tool for your data.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-guess"><div class="highlight"><pre><span></span>pip install superintendent
+</pre></div>
+</div>
+<p>If you want to also use the keyboard shortcuts for labelling faster, you will
+also have to enable the ipyevents jupyter extension:</p>
+<div class="highlight-guess"><div class="highlight"><pre><span></span>jupyter nbextension enable --py --sys-prefix ipyevents
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-case-1-labelling-individual-data-points">
+<h2>Use case 1: Labelling individual data points<a class="headerlink" href="#use-case-1-labelling-individual-data-points" title="Permalink to this headline">¶</a></h2>
+<p>Let’s assume we have a text dataset that contains some labelled sentences and
+some unlabelled sentences. For example, we could get the headlines for a bunch
+of UK news websites (the code for this comes from the github project
+<a class="reference external" href="https://github.com/isobelweinberg/compare-headlines/blob/master/scrape-headlines.ipynb">compare-headlines</a>
+by <a class="reference external" href="https://github.com/isobelweinberg">isobelweinberg</a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="n">headlines</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://www.theguardian.com/uk&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="c1">#get html</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s1">&#39;html5lib&#39;</span><span class="p">)</span> <span class="c1">#run html through beautiful soup</span>
+<span class="n">headlines</span> <span class="o">+=</span> <span class="p">[</span><span class="n">headline</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">headline</span> <span class="ow">in</span>
+              <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">&#39;js-headline-text&#39;</span><span class="p">)][:</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">labels</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;guardian&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">headlines</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span>
+
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://www.dailymail.co.uk/home/index.html&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s1">&#39;html5lib&#39;</span><span class="p">)</span>
+<span class="n">headlines</span> <span class="o">+=</span> <span class="p">[</span><span class="n">headline</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\xa0</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+              <span class="k">for</span> <span class="n">headline</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">&quot;linkro-darkred&quot;</span><span class="p">)][:</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">labels</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;daily mail&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">headlines</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Now let’s assume that instead of wanting to know about the source of the
+article, we actually want to know about how professional the headline is. But we
+don’t have labels for the two! We can use <code class="docutils literal"><span class="pre">superintendent</span></code> to start creating
+some. To make sure it’s nice and easy on the eyes, we’ll also use a custom
+display function to make the text readable.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">superintendent.semisupervisor</span> <span class="kn">import</span> <span class="n">SemiSupervisor</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">IPython</span> <span class="kn">import</span> <span class="n">display</span>
+
+<span class="n">labelling_widget</span> <span class="o">=</span> <span class="n">SemiSupervisor</span><span class="p">(</span><span class="n">headlines</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">headlines</span><span class="p">),</span>
+                                  <span class="n">display_func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">txt</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">:</span> <span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span><span class="n">txt</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">labelling_widget</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;professional&#39;</span><span class="p">,</span> <span class="s1">&#39;not professional&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">labelling_widget</span><span class="o">.</span><span class="n">new_labels</span>
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="use-case-2-labelling-clusters">
+<h2>Use case 2: Labelling clusters<a class="headerlink" href="#use-case-2-labelling-clusters" title="Permalink to this headline">¶</a></h2>
+<p>Another common task is labelling clusters of points. Let’s say, for example,
+that we’ve k-means-clustered the above data and assigned one of</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">superintendent.clustersupervisor</span> <span class="kn">import</span> <span class="n">ClusterSupervisor</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">labelling_widget</span> <span class="o">=</span> <span class="n">ClusterSupervisor</span><span class="p">(</span><span class="n">headlines</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">headlines</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">labelling_widget</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Again, we can get the labels from the object itself:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">labelling_widget</span><span class="o">.</span><span class="n">new_labels</span>
+</pre></div>
+</div>
+<p>We can also get the cluster index -&gt; cluster labels mapping.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">labelling_widget</span><span class="o">.</span><span class="n">new_clusters</span>
+</pre></div>
+</div>
+<p>Now, often when we label text clusters, we probably want to not look at all the
+text individually, but instead want to look at a wordcloud. We can do this by
+passing a word-cloud generating function to our labeller. We’ll use one from the
+<a class="reference external" href="https://github.com/amueller/word_cloud">word_cloud</a> package. We’ll need to
+write a little wrapper around it to actually display it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span>
+<span class="kn">import</span> <span class="nn">IPython.display</span>
+
+<span class="k">def</span> <span class="nf">show_wordcloud</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+    <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span>
+        <span class="n">WordCloud</span><span class="p">()</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">to_image</span><span class="p">()</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">labelling_widget</span> <span class="o">=</span> <span class="n">ClusterSupervisor</span><span class="p">(</span>
+    <span class="n">headlines</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">headlines</span><span class="p">)),</span>
+    <span class="n">display_func</span> <span class="o">=</span> <span class="n">show_wordcloud</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Because we want the wordcloud to be drawn for the entire data set, we need to
+modify the chunk_size argument for our <code class="docutils literal"><span class="pre">annotate</span></code> call:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">labelling_widget</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">labelling_widget</span><span class="o">.</span><span class="n">new_labels</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-case-3-labelling-images">
+<h2>Use case 3: labelling images<a class="headerlink" href="#use-case-3-labelling-images" title="Permalink to this headline">¶</a></h2>
+<p>For labelling images, there is a special factory method that sets the right display functions.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_digits</span>
+<span class="kn">from</span> <span class="nn">superintendent.semisupervisor</span> <span class="kn">import</span> <span class="n">SemiSupervisor</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">digits</span> <span class="o">=</span> <span class="n">load_digits</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">widget</span> <span class="o">=</span> <span class="n">SemiSupervisor</span><span class="o">.</span><span class="n">from_images</span><span class="p">(</span><span class="n">digits</span><span class="p">[:</span><span class="mi">10</span><span class="p">,</span> <span class="p">:])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">widget</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="use-case-4-labelling-clusters-of-images">
+<h2>Use case 4: labelling clusters of images<a class="headerlink" href="#use-case-4-labelling-clusters-of-images" title="Permalink to this headline">¶</a></h2>
+<p>The same can be done for clustered images:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_digits</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">superintendent.clustersupervisor</span> <span class="kn">import</span> <span class="n">ClusterSupervisor</span>
+
+<span class="n">digits</span> <span class="o">=</span> <span class="n">load_digits</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">embedding</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span>
+    <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;correlation&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">clusters</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">embedding</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">cluster_labeller</span> <span class="o">=</span> <span class="n">ClusterSupervisor</span><span class="o">.</span><span class="n">from_images</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">clusters</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">cluster_labeller</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">36</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once you’ve done that, you can check how our clustering worked!</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">target</span> <span class="o">==</span> <span class="n">cluster_labeller</span><span class="o">.</span><span class="n">cluster_labels</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api/modules.html" class="btn btn-neutral float-right" title="superintendent" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Superintendent documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jan Freyberg.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.2.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

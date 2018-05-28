@@ -1,0 +1,518 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>superintendent package &mdash; superintendent 0.2.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="superintendent 0.2.1 documentation" href="../index.html"/>
+        <link rel="up" title="superintendent" href="modules.html"/>
+        <link rel="prev" title="superintendent" href="modules.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> superintendent
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../narrative.html">Example use cases</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">superintendent package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-superintendent.clustersupervisor">superintendent.clustersupervisor module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-superintendent.controls">superintendent.controls module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-superintendent.display">superintendent.display module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-superintendent.iterating">superintendent.iterating module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-superintendent.semisupervisor">superintendent.semisupervisor module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-superintendent.validation">superintendent.validation module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-superintendent">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">superintendent</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">superintendent</a> &raquo;</li>
+        
+      <li>superintendent package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/superintendent.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="superintendent-package">
+<h1>superintendent package<a class="headerlink" href="#superintendent-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-superintendent.clustersupervisor">
+<span id="superintendent-clustersupervisor-module"></span><h2>superintendent.clustersupervisor module<a class="headerlink" href="#module-superintendent.clustersupervisor" title="Permalink to this headline">¶</a></h2>
+<p>Tools to supervise your clustering.</p>
+<dl class="class">
+<dt id="superintendent.clustersupervisor.ClusterSupervisor">
+<em class="property">class </em><code class="descclassname">superintendent.clustersupervisor.</code><code class="descname">ClusterSupervisor</code><span class="sig-paren">(</span><em>features</em>, <em>cluster_labels</em>, <em>representativeness=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/clustersupervisor.html#ClusterSupervisor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.clustersupervisor.ClusterSupervisor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">superintendent.base.Labeller</span></code></p>
+<dl class="method">
+<dt id="superintendent.clustersupervisor.ClusterSupervisor.annotate">
+<code class="descname">annotate</code><span class="sig-paren">(</span><em>ignore=(-1</em>, <em>)</em>, <em>shuffle=True</em>, <em>chunk_size=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/clustersupervisor.html#ClusterSupervisor.annotate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.clustersupervisor.ClusterSupervisor.annotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide labels for items that don’t have any labels.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>relabel</strong> : np.array | pd.Series | list</p>
+<blockquote>
+<div><p>A boolean array-like that is true for each label you would like to
+re-label. Only one other special case is implemented - if you pass
+a single value, all data with that label will be re-labelled.</p>
+</div></blockquote>
+<p><strong>options</strong> : np.array | pd.Series | list</p>
+<blockquote>
+<div><p>the options for re-labelling. If None, all unique values in options
+is offered.</p>
+</div></blockquote>
+<p><strong>shuffle</strong> : bool</p>
+<blockquote class="last">
+<div><p>Whether to randomise the order of relabelling (default True)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-superintendent.controls">
+<span id="superintendent-controls-module"></span><h2>superintendent.controls module<a class="headerlink" href="#module-superintendent.controls" title="Permalink to this headline">¶</a></h2>
+<p>Input and timing control widgets.</p>
+<dl class="class">
+<dt id="superintendent.controls.Submitter">
+<em class="property">class </em><code class="descclassname">superintendent.controls.</code><code class="descname">Submitter</code><span class="sig-paren">(</span><em>options=()</em>, <em>max_buttons=12</em>, <em>other_option=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/controls.html#Submitter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.Submitter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">ipywidgets.widgets.widget_box.VBox</span></code></p>
+<p>A flexible data submission widget.</p>
+<p>Submitter allows you to specifiy options, which can be chosen either via
+buttons or a dropdown, and a text field for “other” values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>options</strong> : list, tuple, optional</p>
+<blockquote>
+<div><p>The data submission options.</p>
+</div></blockquote>
+<p><strong>max_buttons</strong> : int</p>
+<blockquote>
+<div><p>The number buttons you want to display. If len(options) &gt;
+max_buttons, the options will be displayed in a dropdown instead.</p>
+</div></blockquote>
+<p><strong>other_option</strong> : bool, optional</p>
+<blockquote class="last">
+<div><p>Whether the widget should contain a text box for users to type in
+a value not in options.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="superintendent.controls.Submitter.max_buttons">
+<code class="descname">max_buttons</code><a class="headerlink" href="#superintendent.controls.Submitter.max_buttons" title="Permalink to this definition">¶</a></dt>
+<dd><p>An int trait.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="superintendent.controls.Submitter.on_submission">
+<code class="descname">on_submission</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/controls.html#Submitter.on_submission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.Submitter.on_submission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a function to call when the user submits a value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>func</strong> : callable</p>
+<blockquote class="last">
+<div><p>The function to be called when the widget is submitted.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.controls.Submitter.options">
+<code class="descname">options</code><a class="headerlink" href="#superintendent.controls.Submitter.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>An instance of a Python list.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.controls.Submitter.other_option">
+<code class="descname">other_option</code><a class="headerlink" href="#superintendent.controls.Submitter.other_option" title="Permalink to this definition">¶</a></dt>
+<dd><p>A boolean (True, False) trait.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="superintendent.controls.Timer">
+<em class="property">class </em><code class="descclassname">superintendent.controls.</code><code class="descname">Timer</code><a class="reference internal" href="../_modules/superintendent/controls.html#Timer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.Timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>A timer object. Use as a context manager to time operations, and compare to
+numerical values to run conditional code.</p>
+<p>Usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">timer</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="s1">&#39;some quick computation&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">timer</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="s1">&#39;quick computation took less than a second&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-superintendent.display">
+<span id="superintendent-display-module"></span><h2>superintendent.display module<a class="headerlink" href="#module-superintendent.display" title="Permalink to this headline">¶</a></h2>
+<p>Helper functions for displaying types of data.</p>
+<dl class="function">
+<dt id="superintendent.display.default_display_func">
+<code class="descclassname">superintendent.display.</code><code class="descname">default_display_func</code><span class="sig-paren">(</span><em>feature</em>, <em>n_samples=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/display.html#default_display_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.display.default_display_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>A default function that prints the object.</p>
+<p>If the data is not numerical, the function prints the data to screen as
+text.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="superintendent.display.get_values">
+<code class="descclassname">superintendent.display.</code><code class="descname">get_values</code><span class="sig-paren">(</span><em>data</em>, <em>idxs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/display.html#get_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.display.get_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function to index numpy arrays and pandas objects similarly.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="superintendent.display.image_display_func">
+<code class="descclassname">superintendent.display.</code><code class="descname">image_display_func</code><span class="sig-paren">(</span><em>feature</em>, <em>imsize=None</em>, <em>n_samples=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/display.html#image_display_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.display.image_display_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>Image display function.</p>
+<p>Iterates over the rows in the array and uses matplotlib imshow to actually
+reveal the image.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-superintendent.iterating">
+<span id="superintendent-iterating-module"></span><h2>superintendent.iterating module<a class="headerlink" href="#module-superintendent.iterating" title="Permalink to this headline">¶</a></h2>
+<p>Helper functions for iterating over different types of data.</p>
+<dl class="function">
+<dt id="superintendent.iterating.get_index">
+<code class="descclassname">superintendent.iterating.</code><code class="descname">get_index</code><span class="sig-paren">(</span><em>data</em>, <em>shuffle=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/iterating.html#get_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.iterating.get_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an integer index, either shuffled or not.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="superintendent.iterating.get_values">
+<code class="descclassname">superintendent.iterating.</code><code class="descname">get_values</code><span class="sig-paren">(</span><em>data</em>, <em>idxs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/iterating.html#get_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.iterating.get_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get values from numpy and pandas objects equivalently.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="superintendent.iterating.iterate">
+<code class="descclassname">superintendent.iterating.</code><code class="descname">iterate</code><span class="sig-paren">(</span><em>data</em>, <em>shuffle=True</em>, <em>chunk_size=1</em>, <em>include=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/iterating.html#iterate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.iterating.iterate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over data objects.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="superintendent.iterating.stratified_grouper">
+<code class="descclassname">superintendent.iterating.</code><code class="descname">stratified_grouper</code><span class="sig-paren">(</span><em>n</em>, <em>iterable</em>, <em>include</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/iterating.html#stratified_grouper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.iterating.stratified_grouper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate in chunks, optionally ingnoring some elements.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-superintendent.semisupervisor">
+<span id="superintendent-semisupervisor-module"></span><h2>superintendent.semisupervisor module<a class="headerlink" href="#module-superintendent.semisupervisor" title="Permalink to this headline">¶</a></h2>
+<p>Tools to supervise classification.</p>
+<dl class="class">
+<dt id="superintendent.semisupervisor.SemiSupervisor">
+<em class="property">class </em><code class="descclassname">superintendent.semisupervisor.</code><code class="descname">SemiSupervisor</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/semisupervisor.html#SemiSupervisor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.semisupervisor.SemiSupervisor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">superintendent.base.Labeller</span></code></p>
+<p>A class for labelling your data.</p>
+<p>This class is designed to label data for (semi-)supervised learning
+algorithms. It allows you to label data. In the future, it will also allow
+you to re-train an algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>features</strong> : list, np.ndarray, pd.Series, pd.DataFrame</p>
+<blockquote>
+<div><p>An array or sequence of data in which each element (if 1D) or each row
+(if 2D) represents one data point for which you’d like to generate
+labels.</p>
+</div></blockquote>
+<p><strong>labels</strong> : list, np.ndarray, pd.Series, pd.DataFrame, optional</p>
+<blockquote>
+<div><p>If you already have some labels, but would like to re-label some, then
+you can pass these in as labels.</p>
+</div></blockquote>
+<p><strong>display_func</strong> : callable</p>
+<blockquote class="last">
+<div><p>A function that will be used to display the data. This function should
+take in two arguments, first the data to display, and second the number
+of data points to display (set to 1 for this class).</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="superintendent.semisupervisor.SemiSupervisor.annotate">
+<code class="descname">annotate</code><span class="sig-paren">(</span><em>relabel=None</em>, <em>options=None</em>, <em>shuffle=True</em>, <em>shortcuts=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/semisupervisor.html#SemiSupervisor.annotate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.semisupervisor.SemiSupervisor.annotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide labels for items that don’t have any labels.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>relabel</strong> : np.array | pd.Series | list</p>
+<blockquote>
+<div><p>A boolean array-like that is true for each label you would like to
+re-label. Only one other special case is implemented - if you pass
+a single value, all data with that label will be re-labelled.</p>
+</div></blockquote>
+<p><strong>options</strong> : np.array | pd.Series | list</p>
+<blockquote>
+<div><p>the options for re-labelling. If None, all unique values in options
+is offered.</p>
+</div></blockquote>
+<p><strong>shuffle</strong> : bool</p>
+<blockquote class="last">
+<div><p>Whether to randomise the order of relabelling (default True)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-superintendent.validation">
+<span id="superintendent-validation-module"></span><h2>superintendent.validation module<a class="headerlink" href="#module-superintendent.validation" title="Permalink to this headline">¶</a></h2>
+<p>Functions to validate arguments.</p>
+<dl class="function">
+<dt id="superintendent.validation.valid_classifier">
+<code class="descclassname">superintendent.validation.</code><code class="descname">valid_classifier</code><span class="sig-paren">(</span><em>classifier</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/validation.html#valid_classifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.validation.valid_classifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if an object conforms to sklearns fit / predict interface.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="superintendent.validation.valid_data">
+<code class="descclassname">superintendent.validation.</code><code class="descname">valid_data</code><span class="sig-paren">(</span><em>features</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/validation.html#valid_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.validation.valid_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if an object is an array or can be turned into one.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-superintendent">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-superintendent" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="modules.html" class="btn btn-neutral" title="superintendent" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jan Freyberg.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.2.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
