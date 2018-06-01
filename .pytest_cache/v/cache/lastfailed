@@ -1,0 +1,9 @@
+{
+  "tests/test_semisupervisor.py::test_submitting_data[features14-False-labels14]": true,
+  "tests/test_semisupervisor.py::test_submitting_data[features2-False-labels2]": true,
+  "tests/test_semisupervisor.py::test_submitting_data[features4-True-labels4]": true,
+  "tests/test_semisupervisor.py::test_submitting_data[features5-True-labels5]": true,
+  "tests/test_semisupervisor.py::test_submitting_data[features6-False-labels6]": true,
+  "tests/test_semisupervisor.py::test_submitting_data[features7-False-labels7]": true,
+  "tests/test_semisupervisor.py::test_submitting_data[features9-True-labels9]": true
+}

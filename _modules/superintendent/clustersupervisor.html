@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>superintendent.clustersupervisor &mdash; superintendent 0.2.1 documentation</title>
+  <title>superintendent.clustersupervisor &mdash; superintendent 0.2.2 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="superintendent 0.2.1 documentation" href="../../index.html"/>
+    <link rel="top" title="superintendent 0.2.2 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                0.2.1
+                0.2.2
               </div>
             
           
@@ -166,15 +166,30 @@
   <h1>Source code for superintendent.clustersupervisor</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Tools to supervise your clustering.&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">deque</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">iterating</span><span class="p">,</span> <span class="n">validation</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">validation</span>
 <span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">Labeller</span>
+<span class="kn">from</span> <span class="nn">.display</span> <span class="k">import</span> <span class="n">get_values</span>
 
 
 <div class="viewcode-block" id="ClusterSupervisor"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.clustersupervisor.ClusterSupervisor">[docs]</a><span class="k">class</span> <span class="nc">ClusterSupervisor</span><span class="p">(</span><span class="n">Labeller</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A labelling tool for clusters.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    features : np.ndarray, pd.Series. pd.DataFrame</span>
+<span class="sd">        Your features.</span>
+<span class="sd">    cluster_labels : np.ndarray, pd.Series</span>
+<span class="sd">        The cluster label for each data point.</span>
+<span class="sd">    representativeness : np.ndarray, pd.Series</span>
+<span class="sd">        How representative of a cluster your data points are. This can be the</span>
+<span class="sd">        probability of cluster membership (as in e.g. HDBSCAN), or cluster</span>
+<span class="sd">        centrality (e.g. K-Means).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">cluster_labels</span><span class="p">,</span> <span class="n">representativeness</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
@@ -218,62 +233,57 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cluster_labels</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_current_annotation_iterator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_annotation_iterator</span><span class="p">(</span>
-            <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label_queue</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_clusters</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_already_labelled</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([])</span>
+        <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label_queue</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_annotation_iterator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_annotation_iterator</span><span class="p">()</span>
         <span class="c1"># reset the progress bar</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">progressbar</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clusters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">progressbar</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label_queue</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">progressbar</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="c1"># start the iteration cycle</span>
         <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_annotation_iterator</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_annotation_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_annotation_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The method that iterates over the clusters and presents them for</span>
 <span class="sd">        annotation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_clusters</span><span class="p">:</span>
-
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label_queue</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">cluster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label_queue</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_already_labelled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
             <span class="n">sorted_index</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">i</span>
-                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">rep</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span>
+                <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">rep</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span>
                     <span class="nb">enumerate</span><span class="p">(</span>
-                        <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">representativeness</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cluster_labels</span><span class="p">)</span>
-                    <span class="p">),</span>
+                        <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">representativeness</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cluster_labels</span><span class="p">)),</span>
                     <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">triplet</span><span class="p">:</span> <span class="n">triplet</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
-                    <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="p">)</span>
+                    <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="n">cluster</span>
             <span class="p">]</span>
-
-            <span class="n">features</span> <span class="o">=</span> <span class="n">iterating</span><span class="o">.</span><span class="n">get_values</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">sorted_index</span><span class="p">)</span>
-
-            <span class="n">new_val</span> <span class="o">=</span> <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compose</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="p">[])</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">progressbar</span><span class="o">.</span><span class="n">value</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">features</span> <span class="o">=</span> <span class="n">get_values</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">sorted_index</span><span class="p">)</span>
+            <span class="n">new_val</span> <span class="o">=</span> <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compose</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
 
             <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span><span class="p">[</span><span class="n">cluster</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">new_val</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">new_clusters</span><span class="p">[</span><span class="n">cluster</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_val</span>
-
-            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">new_clusters</span><span class="p">[</span><span class="n">cluster</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">new_val</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span><span class="p">[</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">cluster_labels</span> <span class="o">==</span> <span class="n">cluster</span>
                 <span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_clusters</span><span class="p">[</span><span class="n">cluster</span><span class="p">]</span>
             <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">new_clusters</span><span class="p">[</span><span class="n">cluster</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_val</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span><span class="p">[</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">cluster_labels</span> <span class="o">==</span> <span class="n">cluster</span>
                 <span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_clusters</span><span class="p">[</span><span class="n">cluster</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="n">new_val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_widget</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">new_val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_widget</span><span class="o">.</span><span class="n">options</span>
+                <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_val</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;nan&#39;</span>
+            <span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">input_widget</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_widget</span><span class="o">.</span><span class="n">options</span> <span class="o">+</span> <span class="p">[</span>
-                    <span class="n">new_val</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">new_val</span><span class="p">)</span>
                 <span class="p">]</span>
-            <span class="c1"># self.input_widget.options = [</span>
-            <span class="c1">#     val for val in self.new_clusters.values() if val is not None</span>
-            <span class="c1"># ]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">cluster_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_clusters</span>
         <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_render_finished</span><span class="p">()</span></div>
@@ -313,7 +323,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.2.1',
+            VERSION:'0.2.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

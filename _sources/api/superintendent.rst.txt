@@ -28,10 +28,10 @@ superintendent\.display module
     :undoc-members:
     :show-inheritance:
 
-superintendent\.iterating module
---------------------------------
+superintendent\.prioritisation module
+-------------------------------------
 
-.. automodule:: superintendent.iterating
+.. automodule:: superintendent.prioritisation
     :members:
     :undoc-members:
     :show-inheritance:

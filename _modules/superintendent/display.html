@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>superintendent.display &mdash; superintendent 0.2.1 documentation</title>
+  <title>superintendent.display &mdash; superintendent 0.2.2 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="superintendent 0.2.1 documentation" href="../../index.html"/>
+    <link rel="top" title="superintendent 0.2.2 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                0.2.1
+                0.2.2
               </div>
             
           
@@ -175,9 +175,18 @@
 
 
 <div class="viewcode-block" id="get_values"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.display.get_values">[docs]</a><span class="k">def</span> <span class="nf">get_values</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">idxs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Helper function to index numpy arrays and pandas objects similarly.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function to index numpy arrays and pandas objects similarly.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : np.ndarray, pd.Series, pd.DataFrame</span>
+<span class="sd">        The features</span>
+<span class="sd">    idxs : np.ndarray, pd.Series, list</span>
+<span class="sd">        The indices to get. Should be integers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">idxs</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>  <span class="c1"># for idx in list(idxs)]</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">idxs</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)):</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">idxs</span><span class="p">)]</span>
     <span class="k">else</span><span class="p">:</span>
@@ -190,11 +199,17 @@
 
 <span class="sd">    If the data is not numerical, the function prints the data to screen as</span>
 <span class="sd">    text.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    feature : np.ndarray, pd.Series, pd.DataFrame</span>
+<span class="sd">        The feature(s) you want to display</span>
+<span class="sd">    n_samples : int</span>
+<span class="sd">        How many you want to display.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n_samples</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">feature</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
-        <span class="n">feature</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">number</span>
-    <span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span>
+            <span class="n">feature</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">):</span>
         <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span>
             <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span>
                 <span class="s2">&quot;&lt;br&gt;</span><span class="se">\n</span><span class="s2">&amp;nbsp;</span><span class="se">\n</span><span class="s2">&lt;br&gt;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
@@ -213,6 +228,15 @@
 
 <span class="sd">    Iterates over the rows in the array and uses matplotlib imshow to actually</span>
 <span class="sd">    reveal the image.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    feature : np.ndarray</span>
+<span class="sd">        The data, in the shape of n_samples, n_pixels</span>
+<span class="sd">    imsize : tuple, optional</span>
+<span class="sd">        A tuple of width, height that gets passed to np.reshape</span>
+<span class="sd">    n_samples : int</span>
+<span class="sd">        number of images to show.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n_samples</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">feature</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="c1"># grid layout for subplots</span>
@@ -282,7 +306,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.2.1',
+            VERSION:'0.2.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

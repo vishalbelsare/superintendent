@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>superintendent.controls &mdash; superintendent 0.2.1 documentation</title>
+  <title>superintendent.controls &mdash; superintendent 0.2.2 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="superintendent 0.2.1 documentation" href="../../index.html"/>
+    <link rel="top" title="superintendent 0.2.2 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                0.2.1
+                0.2.2
               </div>
             
           
@@ -197,22 +197,10 @@
     <span class="n">max_buttons</span> <span class="o">=</span> <span class="n">traitlets</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(),</span> <span class="n">max_buttons</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">other_option</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a widget that will render submission options.</span>
+        <span class="sd">&quot;&quot;&quot;Create a widget that will render submission options.</span>
 
 <span class="sd">        Note that all parameters can also be changed through assignment after</span>
 <span class="sd">        you create the widget.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        options : list, tuple, optional</span>
-<span class="sd">            The data submission options.</span>
-<span class="sd">        max_buttons : int</span>
-<span class="sd">            The number buttons you want to display. If len(options) &gt;</span>
-<span class="sd">            max_buttons, the options will be displayed in a dropdown instead.</span>
-<span class="sd">        other_option : bool, optional</span>
-<span class="sd">            Whether the widget should contain a text box for users to type in</span>
-<span class="sd">            a value not in options.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">([])</span>
@@ -243,11 +231,17 @@
 <span class="sd">        func : callable</span>
 <span class="sd">            The function to be called when the widget is submitted.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">submission_functions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">submission_functions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compose</span><span class="p">()</span>  <span class="c1"># recompose to remove cursor from text field</span></div>
+
+    <span class="k">def</span> <span class="nf">_sort_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">change</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compose</span><span class="p">()</span>
 
     <span class="nd">@traitlets</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="s2">&quot;other_option&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">,</span> <span class="s2">&quot;max_buttons&quot;</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">_compose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">change</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">option</span><span class="p">)</span> <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_buttons</span><span class="p">:</span>
             <span class="n">control_elements</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">(</span>
                 <span class="p">[</span>
@@ -276,7 +270,8 @@
                 <span class="p">(</span><span class="n">control_elements</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;description&quot;</span><span class="p">),</span>
             <span class="p">)</span>
             <span class="n">control_elements</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_when_submitted</span><span class="p">)</span>
-
+        <span class="n">sort_button</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Sort options&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;sort&quot;</span><span class="p">)</span>
+        <span class="n">sort_button</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sort_options</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_option</span><span class="p">:</span>
             <span class="n">other_widget</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span>
                 <span class="n">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -284,9 +279,17 @@
                 <span class="n">placeholder</span><span class="o">=</span><span class="s2">&quot;Hit enter to submit.&quot;</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">other_widget</span><span class="o">.</span><span class="n">on_submit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_when_submitted</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">control_elements</span><span class="p">,</span> <span class="n">other_widget</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">control_elements</span><span class="p">,</span>
+                <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">other_widget</span><span class="p">,</span> <span class="n">sort_button</span><span class="p">],</span>
+                    <span class="n">layout</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span>
+                        <span class="n">justify_content</span><span class="o">=</span><span class="s2">&quot;space-between&quot;</span>
+                    <span class="p">),</span>
+                <span class="p">),</span>
+            <span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">control_elements</span><span class="p">]</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">control_elements</span><span class="p">,</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">([</span><span class="n">sort_button</span><span class="p">])]</span></div>
 
 
 <div class="viewcode-block" id="Timer"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.controls.Timer">[docs]</a><span class="nd">@total_ordering</span>
@@ -299,6 +302,7 @@
 
 <span class="sd">    .. code-block:: python</span>
 
+<span class="sd">        from superintendent.controls import Timer</span>
 <span class="sd">        timer = Timer()</span>
 <span class="sd">        with timer: print(&#39;some quick computation&#39;)</span>
 <span class="sd">        if timer &lt; 1: print(&#39;quick computation took less than a second&#39;)</span>
@@ -358,7 +362,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.2.1',
+            VERSION:'0.2.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

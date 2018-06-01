@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>superintendent package &mdash; superintendent 0.2.1 documentation</title>
+  <title>superintendent package &mdash; superintendent 0.2.2 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="superintendent 0.2.1 documentation" href="../index.html"/>
+    <link rel="top" title="superintendent 0.2.2 documentation" href="../index.html"/>
         <link rel="up" title="superintendent" href="modules.html"/>
         <link rel="prev" title="superintendent" href="modules.html"/> 
 
@@ -73,7 +73,7 @@
             
             
               <div class="version">
-                0.2.1
+                0.2.2
               </div>
             
           
@@ -106,7 +106,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#module-superintendent.clustersupervisor">superintendent.clustersupervisor module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-superintendent.controls">superintendent.controls module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-superintendent.display">superintendent.display module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-superintendent.iterating">superintendent.iterating module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-superintendent.prioritisation">superintendent.prioritisation module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-superintendent.semisupervisor">superintendent.semisupervisor module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-superintendent.validation">superintendent.validation module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-superintendent">Module contents</a></li>
@@ -191,6 +191,29 @@
 <dt id="superintendent.clustersupervisor.ClusterSupervisor">
 <em class="property">class </em><code class="descclassname">superintendent.clustersupervisor.</code><code class="descname">ClusterSupervisor</code><span class="sig-paren">(</span><em>features</em>, <em>cluster_labels</em>, <em>representativeness=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/clustersupervisor.html#ClusterSupervisor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.clustersupervisor.ClusterSupervisor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">superintendent.base.Labeller</span></code></p>
+<p>A labelling tool for clusters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>features</strong> : np.ndarray, pd.Series. pd.DataFrame</p>
+<blockquote>
+<div><p>Your features.</p>
+</div></blockquote>
+<p><strong>cluster_labels</strong> : np.ndarray, pd.Series</p>
+<blockquote>
+<div><p>The cluster label for each data point.</p>
+</div></blockquote>
+<p><strong>representativeness</strong> : np.ndarray, pd.Series</p>
+<blockquote class="last">
+<div><p>How representative of a cluster your data points are. This can be the
+probability of cluster membership (as in e.g. HDBSCAN), or cluster
+centrality (e.g. K-Means).</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="superintendent.clustersupervisor.ClusterSupervisor.annotate">
 <code class="descname">annotate</code><span class="sig-paren">(</span><em>ignore=(-1</em>, <em>)</em>, <em>shuffle=True</em>, <em>chunk_size=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/clustersupervisor.html#ClusterSupervisor.annotate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.clustersupervisor.ClusterSupervisor.annotate" title="Permalink to this definition">¶</a></dt>
@@ -300,7 +323,8 @@ a value not in options.</p>
 <p>A timer object. Use as a context manager to time operations, and compare to
 numerical values to run conditional code.</p>
 <p>Usage:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">superintendent.controls</span> <span class="kn">import</span> <span class="n">Timer</span>
+<span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
 <span class="k">with</span> <span class="n">timer</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="s1">&#39;some quick computation&#39;</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">timer</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="s1">&#39;quick computation took less than a second&#39;</span><span class="p">)</span>
 </pre></div>
@@ -317,12 +341,44 @@ numerical values to run conditional code.</p>
 <dd><p>A default function that prints the object.</p>
 <p>If the data is not numerical, the function prints the data to screen as
 text.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>feature</strong> : np.ndarray, pd.Series, pd.DataFrame</p>
+<blockquote>
+<div><p>The feature(s) you want to display</p>
+</div></blockquote>
+<p><strong>n_samples</strong> : int</p>
+<blockquote class="last">
+<div><p>How many you want to display.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="superintendent.display.get_values">
 <code class="descclassname">superintendent.display.</code><code class="descname">get_values</code><span class="sig-paren">(</span><em>data</em>, <em>idxs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/display.html#get_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.display.get_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper function to index numpy arrays and pandas objects similarly.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data</strong> : np.ndarray, pd.Series, pd.DataFrame</p>
+<blockquote>
+<div><p>The features</p>
+</div></blockquote>
+<p><strong>idxs</strong> : np.ndarray, pd.Series, list</p>
+<blockquote class="last">
+<div><p>The indices to get. Should be integers.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -331,34 +387,76 @@ text.</p>
 <dd><p>Image display function.</p>
 <p>Iterates over the rows in the array and uses matplotlib imshow to actually
 reveal the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>feature</strong> : np.ndarray</p>
+<blockquote>
+<div><p>The data, in the shape of n_samples, n_pixels</p>
+</div></blockquote>
+<p><strong>imsize</strong> : tuple, optional</p>
+<blockquote>
+<div><p>A tuple of width, height that gets passed to np.reshape</p>
+</div></blockquote>
+<p><strong>n_samples</strong> : int</p>
+<blockquote class="last">
+<div><p>number of images to show.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
-<div class="section" id="module-superintendent.iterating">
-<span id="superintendent-iterating-module"></span><h2>superintendent.iterating module<a class="headerlink" href="#module-superintendent.iterating" title="Permalink to this headline">¶</a></h2>
-<p>Helper functions for iterating over different types of data.</p>
+<div class="section" id="module-superintendent.prioritisation">
+<span id="superintendent-prioritisation-module"></span><h2>superintendent.prioritisation module<a class="headerlink" href="#module-superintendent.prioritisation" title="Permalink to this headline">¶</a></h2>
+<p>Functions to prioritise labelling data points (to drive active learning).</p>
+<p>This module implements a range of functions that produce ordering of data based
+on class probabilities.</p>
 <dl class="function">
-<dt id="superintendent.iterating.get_index">
-<code class="descclassname">superintendent.iterating.</code><code class="descname">get_index</code><span class="sig-paren">(</span><em>data</em>, <em>shuffle=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/iterating.html#get_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.iterating.get_index" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get an integer index, either shuffled or not.</p>
+<dt id="superintendent.prioritisation.entropy">
+<code class="descclassname">superintendent.prioritisation.</code><code class="descname">entropy</code><span class="sig-paren">(</span><em>probabilities</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/prioritisation.html#entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.prioritisation.entropy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort by the entropy of the probabilities (high to low).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>probabilities</strong> : np.ndarray</p>
+<blockquote class="last">
+<div><p>An array of probabilities, with the shape n_samples,
+n_classes</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="data">
+<dt id="superintendent.prioritisation.functions">
+<code class="descclassname">superintendent.prioritisation.</code><code class="descname">functions</code><em class="property"> = {'entropy': &lt;function entropy at 0x11552d7b8&gt;, 'margin': &lt;function margin at 0x117c2d730&gt;}</em><a class="headerlink" href="#superintendent.prioritisation.functions" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of functions to prioritise data.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="superintendent.iterating.get_values">
-<code class="descclassname">superintendent.iterating.</code><code class="descname">get_values</code><span class="sig-paren">(</span><em>data</em>, <em>idxs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/iterating.html#get_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.iterating.get_values" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get values from numpy and pandas objects equivalently.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="superintendent.iterating.iterate">
-<code class="descclassname">superintendent.iterating.</code><code class="descname">iterate</code><span class="sig-paren">(</span><em>data</em>, <em>shuffle=True</em>, <em>chunk_size=1</em>, <em>include=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/iterating.html#iterate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.iterating.iterate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Iterate over data objects.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="superintendent.iterating.stratified_grouper">
-<code class="descclassname">superintendent.iterating.</code><code class="descname">stratified_grouper</code><span class="sig-paren">(</span><em>n</em>, <em>iterable</em>, <em>include</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/iterating.html#stratified_grouper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.iterating.stratified_grouper" title="Permalink to this definition">¶</a></dt>
-<dd><p>Iterate in chunks, optionally ingnoring some elements.</p>
+<dt id="superintendent.prioritisation.margin">
+<code class="descclassname">superintendent.prioritisation.</code><code class="descname">margin</code><span class="sig-paren">(</span><em>probabilities</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/prioritisation.html#margin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.prioritisation.margin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort by the margin between the top two predictions (low to high).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>probabilities</strong> : np.ndarray</p>
+<blockquote class="last">
+<div><p>An array of probabilities, with the shape n_samples,
+n_classes</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -367,7 +465,7 @@ reveal the image.</p>
 <p>Tools to supervise classification.</p>
 <dl class="class">
 <dt id="superintendent.semisupervisor.SemiSupervisor">
-<em class="property">class </em><code class="descclassname">superintendent.semisupervisor.</code><code class="descname">SemiSupervisor</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/semisupervisor.html#SemiSupervisor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.semisupervisor.SemiSupervisor" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">superintendent.semisupervisor.</code><code class="descname">SemiSupervisor</code><span class="sig-paren">(</span><em>features</em>, <em>labels=None</em>, <em>classifier=None</em>, <em>display_func=None</em>, <em>eval_method=None</em>, <em>reorder=None</em>, <em>keyboard_shortcuts=False</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/semisupervisor.html#SemiSupervisor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.semisupervisor.SemiSupervisor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">superintendent.base.Labeller</span></code></p>
 <p>A class for labelling your data.</p>
 <p>This class is designed to label data for (semi-)supervised learning
@@ -388,11 +486,36 @@ labels.</p>
 <div><p>If you already have some labels, but would like to re-label some, then
 you can pass these in as labels.</p>
 </div></blockquote>
-<p><strong>display_func</strong> : callable</p>
-<blockquote class="last">
+<p><strong>classifier</strong> : sklearn.base.ClassifierMixin, optional</p>
+<blockquote>
+<div><p>An object that implements the standard sklearn fit/predict methods. If
+provided, a button for retraining the model is shown, and the model
+performance under k-fold crossvalidation can be read as you go along.</p>
+</div></blockquote>
+<p><strong>display_func</strong> : callable, optional</p>
+<blockquote>
 <div><p>A function that will be used to display the data. This function should
 take in two arguments, first the data to display, and second the number
 of data points to display (set to 1 for this class).</p>
+</div></blockquote>
+<p><strong>eval_method</strong> : callable, optional</p>
+<blockquote>
+<div><p>A function that accepts the classifier, features, and labels as input
+and returns a dictionary of values that contain the key ‘test_score’.
+The default is sklearn.model_selection.cross_validate, with cv=3. Use
+functools.partial to create a function with its parameters fixed.</p>
+</div></blockquote>
+<p><strong>reorder</strong> : str, callable, optional</p>
+<blockquote>
+<div><p>One of the reordering algorithms specified in
+<a class="reference internal" href="#module-superintendent.prioritisation" title="superintendent.prioritisation"><code class="xref py py-mod docutils literal"><span class="pre">superintendent.prioritisation</span></code></a>. This describes a function that
+receives input in the shape of n_samples, n_labels and calculates the
+priority in terms of information value in labelling a data point.</p>
+</div></blockquote>
+<p><strong>keyboard_shortcuts</strong> : bool, optional</p>
+<blockquote class="last">
+<div><p>If you want to enable ipyevent-mediated keyboard capture to use the
+keyboard rather than the mouse to submit data.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -406,15 +529,16 @@ of data points to display (set to 1 for this class).</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>relabel</strong> : np.array | pd.Series | list</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>relabel</strong> : np.array, pd.Series, list, optional</p>
 <blockquote>
 <div><p>A boolean array-like that is true for each label you would like to
 re-label. Only one other special case is implemented - if you pass
-a single value, all data with that label will be re-labelled.</p>
+a single value, all data with that label will be re-labelled. If
+None (default), all data is relabelled.</p>
 </div></blockquote>
-<p><strong>options</strong> : np.array | pd.Series | list</p>
+<p><strong>options</strong> : np.array, pd.Series, list, optional</p>
 <blockquote>
-<div><p>the options for re-labelling. If None, all unique values in options
+<div><p>the options for re-labelling. If None, all unique values in labels
 is offered.</p>
 </div></blockquote>
 <p><strong>shuffle</strong> : bool</p>
@@ -427,6 +551,15 @@ is offered.</p>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="superintendent.semisupervisor.SemiSupervisor.retrain">
+<code class="descname">retrain</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/semisupervisor.html#SemiSupervisor.retrain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.semisupervisor.SemiSupervisor.retrain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrain the classifier you passed when creating this widget.</p>
+<p>This calls the fit method of your class with the data that you’ve
+labelled. It will also score the classifier and display the
+performance.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -437,12 +570,36 @@ is offered.</p>
 <dt id="superintendent.validation.valid_classifier">
 <code class="descclassname">superintendent.validation.</code><code class="descname">valid_classifier</code><span class="sig-paren">(</span><em>classifier</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/validation.html#valid_classifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.validation.valid_classifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if an object conforms to sklearns fit / predict interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>classifier</strong> : sklearn.base.ClassifierMixin</p>
+<blockquote class="last">
+<div><p>A classification model compliant with sklearn interfaces.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="superintendent.validation.valid_data">
 <code class="descclassname">superintendent.validation.</code><code class="descname">valid_data</code><span class="sig-paren">(</span><em>features</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/validation.html#valid_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.validation.valid_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if an object is an array or can be turned into one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>features</strong> : pd.DataFrame, pd.Series, np.ndarray</p>
+<blockquote class="last">
+<div><p>the data to double-check.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -493,7 +650,7 @@ is offered.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.2.1',
+            VERSION:'0.2.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

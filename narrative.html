@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Superintendent &mdash; superintendent 0.2.1 documentation</title>
+  <title>Superintendent &mdash; superintendent 0.2.2 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="superintendent 0.2.1 documentation" href="index.html"/>
+    <link rel="top" title="superintendent 0.2.2 documentation" href="index.html"/>
         <link rel="next" title="superintendent" href="api/modules.html"/>
         <link rel="prev" title="Superintendent documentation" href="index.html"/> 
 
@@ -73,7 +73,7 @@
             
             
               <div class="version">
-                0.2.1
+                0.2.2
               </div>
             
           
@@ -100,11 +100,15 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Example use cases</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#side-note">Side note:</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#use-case-1-labelling-individual-data-points">Use case 1: Labelling individual data points</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#use-case-2-labelling-clusters">Use case 2: Labelling clusters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#use-case-3-labelling-images">Use case 3: labelling images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#use-case-4-labelling-clusters-of-images">Use case 4: labelling clusters of images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#use-case-5-active-learning">Use case 5: Active learning</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api/modules.html">API Reference</a></li>
@@ -188,6 +192,15 @@
 also have to enable the ipyevents jupyter extension:</p>
 <div class="highlight-guess"><div class="highlight"><pre><span></span>jupyter nbextension enable --py --sys-prefix ipyevents
 </pre></div>
+</div>
+<div class="section" id="side-note">
+<h3>Side note:<a class="headerlink" href="#side-note" title="Permalink to this headline">¶</a></h3>
+<p>For these examples, you will also need to install the following packages:</p>
+<div class="highlight-guess"><div class="highlight"><pre><span></span>pip install requests bs4 wordcloud
+</pre></div>
+</div>
+<p>These are not required for superintendent itself, so they won’t be installed
+when you install superintendent.</p>
 </div>
 </div>
 <div class="section" id="use-case-1-labelling-individual-data-points">
@@ -341,6 +354,33 @@ modify the chunk_size argument for our <code class="docutils literal"><span clas
 </pre></div>
 </div>
 </div>
+<div class="section" id="use-case-5-active-learning">
+<h2>Use case 5: Active learning<a class="headerlink" href="#use-case-5-active-learning" title="Permalink to this headline">¶</a></h2>
+<p>Often, we have a rough idea of an algorithm that might do well on a given task, even if we don’t have any labels at all. For example, I know that for a simple image set like MNIST, logistic regression actually does surprisingly well.</p>
+<p>In this case, we want to do two things:</p>
+<ol class="arabic simple">
+<li>We want to keep track of our algorithm’s performance</li>
+<li>We want to leverage our algorithm’s predictions to decide what data point to label.</li>
+</ol>
+<p>Both of these things can be done with superintendent. For point one, all we need to do is pass an object that conforms to the fit / predict syntax of sklearn as the <code class="docutils literal"><span class="pre">classifier</span></code> keyword argument.</p>
+<p>For the second point, we can choose any function that takes in probabilities of labels (in shape <code class="docutils literal"><span class="pre">n_samples,</span> <span class="pre">n_classes</span></code>), sorts them, and returns the sorted integer index from most in need of labelling to least in need of labelling. Superintendent provides some functions, described in the <code class="docutils literal"><span class="pre">superintendent.prioritisation</span></code> submodule, that can achieve this. One of these is the <code class="docutils literal"><span class="pre">entropy</span></code> function, which calculates the entropy of predicted probabilities and prioritises high-entropy samples.</p>
+<p>As an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_digits</span>
+<span class="kn">from</span> <span class="nn">superintendent</span> <span class="kn">import</span> <span class="n">SemiSupervisor</span>
+
+<span class="n">digits</span> <span class="o">=</span> <span class="n">load_digits</span><span class="p">()</span>
+
+<span class="n">data_labeller</span> <span class="o">=</span> <span class="n">SemiSupervisor</span><span class="o">.</span><span class="n">from_images</span><span class="p">(</span>
+    <span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="mi">500</span><span class="p">,</span> <span class="p">:],</span>
+    <span class="n">classifier</span><span class="o">=</span><span class="n">LogisticRegression</span><span class="p">(),</span>
+    <span class="n">reorder</span><span class="o">=</span><span class="s1">&#39;entropy&#39;</span>
+<span class="p">)</span>
+
+<span class="n">data_labeller</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -387,7 +427,7 @@ modify the chunk_size argument for our <code class="docutils literal"><span clas
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.2.1',
+            VERSION:'0.2.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
