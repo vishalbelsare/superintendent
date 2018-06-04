@@ -238,13 +238,13 @@
         <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
             <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label_queue</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_current_annotation_iterator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_annotation_iterator</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_annotation_loop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_annotation_iterator</span><span class="p">()</span>
         <span class="c1"># reset the progress bar</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">progressbar</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label_queue</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">progressbar</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="c1"># start the iteration cycle</span>
-        <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_annotation_iterator</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_annotation_loop</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_annotation_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

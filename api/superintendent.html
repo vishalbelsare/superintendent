@@ -417,16 +417,23 @@ reveal the image.</p>
 on class probabilities.</p>
 <dl class="function">
 <dt id="superintendent.prioritisation.entropy">
-<code class="descclassname">superintendent.prioritisation.</code><code class="descname">entropy</code><span class="sig-paren">(</span><em>probabilities</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/prioritisation.html#entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.prioritisation.entropy" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">superintendent.prioritisation.</code><code class="descname">entropy</code><span class="sig-paren">(</span><em>probabilities</em>, <em>shuffle_prop=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/prioritisation.html#entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.prioritisation.entropy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sort by the entropy of the probabilities (high to low).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>probabilities</strong> : np.ndarray</p>
-<blockquote class="last">
+<blockquote>
 <div><p>An array of probabilities, with the shape n_samples,
 n_classes</p>
+</div></blockquote>
+<p><strong>shuffle_prop</strong> : float</p>
+<blockquote class="last">
+<div><p>The proportion of data points that should be randomly shuffled. This
+means the sorting retains some randomness, to avoid biasing your
+new labels and catching any minority classes the algorithm currently
+classifies as a different label.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -436,22 +443,29 @@ n_classes</p>
 
 <dl class="data">
 <dt id="superintendent.prioritisation.functions">
-<code class="descclassname">superintendent.prioritisation.</code><code class="descname">functions</code><em class="property"> = {'entropy': &lt;function entropy at 0x11552d7b8&gt;, 'margin': &lt;function margin at 0x117c2d730&gt;}</em><a class="headerlink" href="#superintendent.prioritisation.functions" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">superintendent.prioritisation.</code><code class="descname">functions</code><em class="property"> = {'entropy': &lt;function entropy at 0x119e5dd90&gt;, 'margin': &lt;function margin at 0x11a89fbf8&gt;}</em><a class="headerlink" href="#superintendent.prioritisation.functions" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dictionary of functions to prioritise data.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="superintendent.prioritisation.margin">
-<code class="descclassname">superintendent.prioritisation.</code><code class="descname">margin</code><span class="sig-paren">(</span><em>probabilities</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/prioritisation.html#margin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.prioritisation.margin" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">superintendent.prioritisation.</code><code class="descname">margin</code><span class="sig-paren">(</span><em>probabilities</em>, <em>shuffle_prop=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/prioritisation.html#margin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.prioritisation.margin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sort by the margin between the top two predictions (low to high).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>probabilities</strong> : np.ndarray</p>
-<blockquote class="last">
+<blockquote>
 <div><p>An array of probabilities, with the shape n_samples,
 n_classes</p>
+</div></blockquote>
+<p><strong>shuffle_prop</strong> : float</p>
+<blockquote class="last">
+<div><p>The proportion of data points that should be randomly shuffled. This
+means the sorting retains some randomness, to avoid biasing your
+new labels and catching any minority classes the algorithm currently
+classifies as a different label.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -465,7 +479,7 @@ n_classes</p>
 <p>Tools to supervise classification.</p>
 <dl class="class">
 <dt id="superintendent.semisupervisor.SemiSupervisor">
-<em class="property">class </em><code class="descclassname">superintendent.semisupervisor.</code><code class="descname">SemiSupervisor</code><span class="sig-paren">(</span><em>features</em>, <em>labels=None</em>, <em>classifier=None</em>, <em>display_func=None</em>, <em>eval_method=None</em>, <em>reorder=None</em>, <em>keyboard_shortcuts=False</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/semisupervisor.html#SemiSupervisor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.semisupervisor.SemiSupervisor" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">superintendent.semisupervisor.</code><code class="descname">SemiSupervisor</code><span class="sig-paren">(</span><em>features</em>, <em>labels=None</em>, <em>classifier=None</em>, <em>display_func=None</em>, <em>eval_method=None</em>, <em>reorder=None</em>, <em>shuffle_prop=0.1</em>, <em>keyboard_shortcuts=False</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/semisupervisor.html#SemiSupervisor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.semisupervisor.SemiSupervisor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">superintendent.base.Labeller</span></code></p>
 <p>A class for labelling your data.</p>
 <p>This class is designed to label data for (semi-)supervised learning
@@ -511,6 +525,14 @@ functools.partial to create a function with its parameters fixed.</p>
 <a class="reference internal" href="#module-superintendent.prioritisation" title="superintendent.prioritisation"><code class="xref py py-mod docutils literal"><span class="pre">superintendent.prioritisation</span></code></a>. This describes a function that
 receives input in the shape of n_samples, n_labels and calculates the
 priority in terms of information value in labelling a data point.</p>
+</div></blockquote>
+<p><strong>shuffle_prop</strong> : float</p>
+<blockquote>
+<div><p>The proportion of points that are shuffled when the data points are
+re-ordered (see reorder keyword-argument). This controls the
+“exploration vs exploitation” trade-off - the higher, the more you
+explore the feature space randomly, the lower, the more you exploit
+your current weak points.</p>
 </div></blockquote>
 <p><strong>keyboard_shortcuts</strong> : bool, optional</p>
 <blockquote class="last">

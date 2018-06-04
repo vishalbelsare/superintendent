@@ -175,7 +175,13 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
-<div class="viewcode-block" id="entropy"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.prioritisation.entropy">[docs]</a><span class="k">def</span> <span class="nf">entropy</span><span class="p">(</span><span class="n">probabilities</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_shuffle_subset</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="p">):</span>
+    <span class="n">to_shuffle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">shuffle_prop</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">to_shuffle</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">to_shuffle</span><span class="p">),</span> <span class="o">...</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+
+<div class="viewcode-block" id="entropy"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.prioritisation.entropy">[docs]</a><span class="k">def</span> <span class="nf">entropy</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sort by the entropy of the probabilities (high to low).</span>
 
@@ -184,12 +190,18 @@
 <span class="sd">    probabilities : np.ndarray</span>
 <span class="sd">        An array of probabilities, with the shape n_samples,</span>
 <span class="sd">        n_classes</span>
+<span class="sd">    shuffle_prop : float</span>
+<span class="sd">        The proportion of data points that should be randomly shuffled. This</span>
+<span class="sd">        means the sorting retains some randomness, to avoid biasing your</span>
+<span class="sd">        new labels and catching any minority classes the algorithm currently</span>
+<span class="sd">        classifies as a different label.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">entropy</span><span class="p">(</span><span class="n">probabilities</span><span class="o">.</span><span class="n">T</span><span class="p">))</span></div>
+    <span class="n">ordered</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">entropy</span><span class="p">(</span><span class="n">probabilities</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">_shuffle_subset</span><span class="p">(</span><span class="n">ordered</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="margin"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.prioritisation.margin">[docs]</a><span class="k">def</span> <span class="nf">margin</span><span class="p">(</span><span class="n">probabilities</span><span class="p">):</span>
+<div class="viewcode-block" id="margin"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.prioritisation.margin">[docs]</a><span class="k">def</span> <span class="nf">margin</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sort by the margin between the top two predictions (low to high).</span>
 
@@ -198,12 +210,18 @@
 <span class="sd">    probabilities : np.ndarray</span>
 <span class="sd">        An array of probabilities, with the shape n_samples,</span>
 <span class="sd">        n_classes</span>
+<span class="sd">    shuffle_prop : float</span>
+<span class="sd">        The proportion of data points that should be randomly shuffled. This</span>
+<span class="sd">        means the sorting retains some randomness, to avoid biasing your</span>
+<span class="sd">        new labels and catching any minority classes the algorithm currently</span>
+<span class="sd">        classifies as a different label.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span>
+    <span class="n">ordered</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span>
         <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
-    <span class="p">)</span></div>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">_shuffle_subset</span><span class="p">(</span><span class="n">ordered</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="p">)</span></div>
 
 
 <span class="n">functions</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;entropy&quot;</span><span class="p">:</span> <span class="n">entropy</span><span class="p">,</span> <span class="s2">&quot;margin&quot;</span><span class="p">:</span> <span class="n">margin</span><span class="p">}</span>
