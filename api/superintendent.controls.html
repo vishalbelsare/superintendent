@@ -1,0 +1,560 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>superintendent.controls package &mdash; superintendent 0.3.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.5.0/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> superintendent
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labelling-data.html">Labelling data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../active-learning.html">Active learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">superintendent</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>superintendent.controls package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/superintendent.controls.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="superintendent-controls-package">
+<h1>superintendent.controls package<a class="headerlink" href="#superintendent-controls-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-superintendent.controls.buttongroup">
+<span id="superintendent-controls-buttongroup-module"></span><h2>superintendent.controls.buttongroup module<a class="headerlink" href="#module-superintendent.controls.buttongroup" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="superintendent.controls.buttongroup.ButtonGroup">
+<em class="property">class </em><code class="descclassname">superintendent.controls.buttongroup.</code><code class="descname">ButtonGroup</code><span class="sig-paren">(</span><em>options: List[str], button_width: Union[numbers.Number, str, None] = None, *args, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/controls/buttongroup.html#ButtonGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.buttongroup.ButtonGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ipywidgets.widgets.widget_box.HBox</span></code></p>
+<p>A group of buttons with output widgets underneath.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>options</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd><p class="first last">A list of options for this button group.</p>
+</dd>
+<dt><strong>button_width</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, int, float, optional</span></dt>
+<dd><p class="first last">The width of each button as an HTML compatible string or a number.
+(the default is None, which leads to the width being divided
+between the buttons.)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="superintendent.controls.buttongroup.ButtonGroup.button_width">
+<code class="descname">button_width</code><a class="headerlink" href="#superintendent.controls.buttongroup.ButtonGroup.button_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>A trait type representing a Union type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="superintendent.controls.buttongroup.ButtonGroup.on_click">
+<code class="descname">on_click</code><span class="sig-paren">(</span><em>func: Callable</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/superintendent/controls/buttongroup.html#ButtonGroup.on_click"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.buttongroup.ButtonGroup.on_click" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.controls.buttongroup.ButtonGroup.options">
+<code class="descname">options</code><a class="headerlink" href="#superintendent.controls.buttongroup.ButtonGroup.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>An instance of a Python list.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.controls.buttongroup.ButtonGroup.rearrange_buttons">
+<code class="descname">rearrange_buttons</code><a class="headerlink" href="#superintendent.controls.buttongroup.ButtonGroup.rearrange_buttons" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.controls.buttongroup.ButtonGroup.submission_functions">
+<code class="descname">submission_functions</code><a class="headerlink" href="#superintendent.controls.buttongroup.ButtonGroup.submission_functions" title="Permalink to this definition">¶</a></dt>
+<dd><p>An instance of a Python list.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="superintendent.controls.buttongroup.ButtonWithHint">
+<em class="property">class </em><code class="descclassname">superintendent.controls.buttongroup.</code><code class="descname">ButtonWithHint</code><span class="sig-paren">(</span><em>label: str</em>, <em>button_width: str</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/controls/buttongroup.html#ButtonWithHint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.buttongroup.ButtonWithHint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ipywidgets.widgets.widget_box.VBox</span></code></p>
+<dl class="attribute">
+<dt id="superintendent.controls.buttongroup.ButtonWithHint.description">
+<code class="descname">description</code><a class="headerlink" href="#superintendent.controls.buttongroup.ButtonWithHint.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>A trait for unicode strings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="superintendent.controls.buttongroup.ButtonWithHint.on_click">
+<code class="descname">on_click</code><span class="sig-paren">(</span><em>func: Callable</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/controls/buttongroup.html#ButtonWithHint.on_click"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.buttongroup.ButtonWithHint.on_click" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-superintendent.controls.dropdownbutton">
+<span id="superintendent-controls-dropdownbutton-module"></span><h2>superintendent.controls.dropdownbutton module<a class="headerlink" href="#module-superintendent.controls.dropdownbutton" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="superintendent.controls.dropdownbutton.DropdownButton">
+<em class="property">class </em><code class="descclassname">superintendent.controls.dropdownbutton.</code><code class="descname">DropdownButton</code><span class="sig-paren">(</span><em>options</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/controls/dropdownbutton.html#DropdownButton"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.dropdownbutton.DropdownButton" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ipywidgets.widgets.widget_box.VBox</span></code></p>
+<dl class="method">
+<dt id="superintendent.controls.dropdownbutton.DropdownButton.on_click">
+<code class="descname">on_click</code><span class="sig-paren">(</span><em>func: Callable</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/superintendent/controls/dropdownbutton.html#DropdownButton.on_click"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.dropdownbutton.DropdownButton.on_click" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.controls.dropdownbutton.DropdownButton.options">
+<code class="descname">options</code><a class="headerlink" href="#superintendent.controls.dropdownbutton.DropdownButton.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>An instance of a Python list.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.controls.dropdownbutton.DropdownButton.submission_functions">
+<code class="descname">submission_functions</code><a class="headerlink" href="#superintendent.controls.dropdownbutton.DropdownButton.submission_functions" title="Permalink to this definition">¶</a></dt>
+<dd><p>An instance of a Python list.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-superintendent.controls.hintedmultiselect">
+<span id="superintendent-controls-hintedmultiselect-module"></span><h2>superintendent.controls.hintedmultiselect module<a class="headerlink" href="#module-superintendent.controls.hintedmultiselect" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="superintendent.controls.hintedmultiselect.HintedMultiselect">
+<em class="property">class </em><code class="descclassname">superintendent.controls.hintedmultiselect.</code><code class="descname">HintedMultiselect</code><span class="sig-paren">(</span><em>options</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/controls/hintedmultiselect.html#HintedMultiselect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.hintedmultiselect.HintedMultiselect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ipywidgets.widgets.widget_box.HBox</span></code></p>
+<dl class="attribute">
+<dt id="superintendent.controls.hintedmultiselect.HintedMultiselect.options">
+<code class="descname">options</code><a class="headerlink" href="#superintendent.controls.hintedmultiselect.HintedMultiselect.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>An instance of a Python list.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.controls.hintedmultiselect.HintedMultiselect.value">
+<code class="descname">value</code><a class="headerlink" href="#superintendent.controls.hintedmultiselect.HintedMultiselect.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>An instance of a Python list.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-superintendent.controls.keycapture">
+<span id="superintendent-controls-keycapture-module"></span><h2>superintendent.controls.keycapture module<a class="headerlink" href="#module-superintendent.controls.keycapture" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-superintendent.controls.multiclasssubmitter">
+<span id="superintendent-controls-multiclasssubmitter-module"></span><h2>superintendent.controls.multiclasssubmitter module<a class="headerlink" href="#module-superintendent.controls.multiclasssubmitter" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="superintendent.controls.multiclasssubmitter.MulticlassSubmitter">
+<em class="property">class </em><code class="descclassname">superintendent.controls.multiclasssubmitter.</code><code class="descname">MulticlassSubmitter</code><span class="sig-paren">(</span><em>options: Union[List[str], Tuple[str], None] = (), max_buttons: int = 12, other_option: bool = True, update: bool = True, hint_function: Optional[Callable] = None, hints: Optional[Dict[str, Any]] = None, update_hints: bool = True, shortcuts=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/controls/multiclasssubmitter.html#MulticlassSubmitter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.multiclasssubmitter.MulticlassSubmitter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#superintendent.controls.submitter.Submitter" title="superintendent.controls.submitter.Submitter"><code class="xref py py-class docutils literal notranslate"><span class="pre">superintendent.controls.submitter.Submitter</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-superintendent.controls.submitter">
+<span id="superintendent-controls-submitter-module"></span><h2>superintendent.controls.submitter module<a class="headerlink" href="#module-superintendent.controls.submitter" title="Permalink to this headline">¶</a></h2>
+<p>Input and timing control widgets.</p>
+<dl class="class">
+<dt id="superintendent.controls.submitter.Submitter">
+<em class="property">class </em><code class="descclassname">superintendent.controls.submitter.</code><code class="descname">Submitter</code><span class="sig-paren">(</span><em>options: Union[List[str], Tuple[str], None] = (), max_buttons: int = 12, other_option: bool = True, update: bool = True, hint_function: Optional[Callable] = None, hints: Optional[Dict[str, Any]] = None, update_hints: bool = True, shortcuts=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/controls/submitter.html#Submitter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.submitter.Submitter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ipywidgets.widgets.widget_box.VBox</span></code></p>
+<p>A flexible data submission widget.</p>
+<p>Submitter allows you to specifiy options, which can be chosen either via
+buttons or a dropdown, and a text field for “other” values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>options</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, tuple, optional</span></dt>
+<dd><p class="first last">The data submission options.</p>
+</dd>
+<dt><strong>max_buttons</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">The number buttons you want to display. If len(options) &gt;
+max_buttons, the options will be displayed in a dropdown instead.</p>
+</dd>
+<dt><strong>other_option</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><p class="first last">Whether the widget should contain a text box for users to type in
+a value not in options.</p>
+</dd>
+<dt><strong>hint_function</strong> <span class="classifier-delimiter">:</span> <span class="classifier">fun</span></dt>
+<dd><p class="first last">A function that will be passed the hint for each label, that displays
+some output that will be displayed under each label and can be
+considered a hint or more in-depth description of a label. During image
+labelling tasks, this might be a function that displays an example
+image.</p>
+</dd>
+<dt><strong>hints</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">A dictionary with each element of options as a key, and the data that
+gets passed to hint_function as input.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="superintendent.controls.submitter.Submitter.add_hint">
+<code class="descname">add_hint</code><span class="sig-paren">(</span><em>value</em>, <em>hint</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/controls/submitter.html#Submitter.add_hint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.submitter.Submitter.add_hint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.controls.submitter.Submitter.max_buttons">
+<code class="descname">max_buttons</code><a class="headerlink" href="#superintendent.controls.submitter.Submitter.max_buttons" title="Permalink to this definition">¶</a></dt>
+<dd><p>An int trait.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="superintendent.controls.submitter.Submitter.on_submission">
+<code class="descname">on_submission</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/controls/submitter.html#Submitter.on_submission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.submitter.Submitter.on_submission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a function to call when the user submits a value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>func</strong> <span class="classifier-delimiter">:</span> <span class="classifier">callable</span></dt>
+<dd><p class="first last">The function to be called when the widget is submitted.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.controls.submitter.Submitter.options">
+<code class="descname">options</code><a class="headerlink" href="#superintendent.controls.submitter.Submitter.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>An instance of a Python list.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.controls.submitter.Submitter.other_option">
+<code class="descname">other_option</code><a class="headerlink" href="#superintendent.controls.submitter.Submitter.other_option" title="Permalink to this definition">¶</a></dt>
+<dd><p>A boolean (True, False) trait.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="superintendent.controls.submitter.Submitter.remove_options">
+<code class="descname">remove_options</code><span class="sig-paren">(</span><em>values</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/controls/submitter.html#Submitter.remove_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.submitter.Submitter.remove_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-superintendent.controls.timer">
+<span id="superintendent-controls-timer-module"></span><h2>superintendent.controls.timer module<a class="headerlink" href="#module-superintendent.controls.timer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="superintendent.controls.timer.Timer">
+<em class="property">class </em><code class="descclassname">superintendent.controls.timer.</code><code class="descname">Timer</code><a class="reference internal" href="../_modules/superintendent/controls/timer.html#Timer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.timer.Timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A timer object. Use as a context manager to time operations, and compare to
+numerical values (seconds) to run conditional code.</p>
+<p>Usage:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">superintendent.controls</span> <span class="kn">import</span> <span class="n">Timer</span>
+<span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">timer</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;some quick computation&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">timer</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;quick computation took less than a second&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-superintendent.controls.togglebuttongroup">
+<span id="superintendent-controls-togglebuttongroup-module"></span><h2>superintendent.controls.togglebuttongroup module<a class="headerlink" href="#module-superintendent.controls.togglebuttongroup" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="superintendent.controls.togglebuttongroup.ToggleButtonGroup">
+<em class="property">class </em><code class="descclassname">superintendent.controls.togglebuttongroup.</code><code class="descname">ToggleButtonGroup</code><span class="sig-paren">(</span><em>options: List[str], button_width: Union[numbers.Number, str, None] = None, *args, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/controls/togglebuttongroup.html#ToggleButtonGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.togglebuttongroup.ToggleButtonGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ipywidgets.widgets.widget_box.HBox</span></code></p>
+<p>A group of buttons with output widgets underneath.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>options</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd><p class="first last">A list of options for this button group.</p>
+</dd>
+<dt><strong>button_width</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, int, float, optional</span></dt>
+<dd><p class="first last">The width of each button as an HTML compatible string or a number.
+(the default is None, which leads to the width being divided
+between the buttons.)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="superintendent.controls.togglebuttongroup.ToggleButtonGroup.button_width">
+<code class="descname">button_width</code><a class="headerlink" href="#superintendent.controls.togglebuttongroup.ToggleButtonGroup.button_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>A trait type representing a Union type.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.controls.togglebuttongroup.ToggleButtonGroup.options">
+<code class="descname">options</code><a class="headerlink" href="#superintendent.controls.togglebuttongroup.ToggleButtonGroup.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>An instance of a Python list.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.controls.togglebuttongroup.ToggleButtonGroup.rearrange_buttons">
+<code class="descname">rearrange_buttons</code><a class="headerlink" href="#superintendent.controls.togglebuttongroup.ToggleButtonGroup.rearrange_buttons" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.controls.togglebuttongroup.ToggleButtonGroup.submission_functions">
+<code class="descname">submission_functions</code><a class="headerlink" href="#superintendent.controls.togglebuttongroup.ToggleButtonGroup.submission_functions" title="Permalink to this definition">¶</a></dt>
+<dd><p>An instance of a Python list.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.controls.togglebuttongroup.ToggleButtonGroup.value">
+<code class="descname">value</code><a class="headerlink" href="#superintendent.controls.togglebuttongroup.ToggleButtonGroup.value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="superintendent.controls.togglebuttongroup.ToggleButtonWithHint">
+<em class="property">class </em><code class="descclassname">superintendent.controls.togglebuttongroup.</code><code class="descname">ToggleButtonWithHint</code><span class="sig-paren">(</span><em>label: str</em>, <em>button_width: str</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/controls/togglebuttongroup.html#ToggleButtonWithHint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.controls.togglebuttongroup.ToggleButtonWithHint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ipywidgets.widgets.widget_box.VBox</span></code></p>
+<dl class="attribute">
+<dt id="superintendent.controls.togglebuttongroup.ToggleButtonWithHint.description">
+<code class="descname">description</code><a class="headerlink" href="#superintendent.controls.togglebuttongroup.ToggleButtonWithHint.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>A trait for unicode strings.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.controls.togglebuttongroup.ToggleButtonWithHint.value">
+<code class="descname">value</code><a class="headerlink" href="#superintendent.controls.togglebuttongroup.ToggleButtonWithHint.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>A boolean (True, False) trait.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-superintendent.controls">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-superintendent.controls" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jan Freyberg
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/@jupyter-widgets/html-manager@^0.14.0/dist/embed-amd.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

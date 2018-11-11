@@ -1,0 +1,583 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>superintendent.distributed package &mdash; superintendent 0.3.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.5.0/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> superintendent
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labelling-data.html">Labelling data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../active-learning.html">Active learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">superintendent</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>superintendent.distributed package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/superintendent.distributed.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="superintendent-distributed-package">
+<h1>superintendent.distributed package<a class="headerlink" href="#superintendent-distributed-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-superintendent.distributed.dbqueue">
+<span id="superintendent-distributed-dbqueue-module"></span><h2>superintendent.distributed.dbqueue module<a class="headerlink" href="#module-superintendent.distributed.dbqueue" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue">
+<em class="property">class </em><code class="descclassname">superintendent.distributed.dbqueue.</code><code class="descname">DatabaseQueue</code><span class="sig-paren">(</span><em>connection_string='sqlite:///:memory:'</em>, <em>table_name='superintendent'</em>, <em>storage_type='json'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/dbqueue.html#DatabaseQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="superintendent.html#superintendent.queueing.BaseLabellingQueue" title="superintendent.queueing.BaseLabellingQueue"><code class="xref py py-class docutils literal notranslate"><span class="pre">superintendent.queueing.BaseLabellingQueue</span></code></a></p>
+<p>Implements a queue for distributed labelling.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">superintendent.distributed.dbqueue</span> <span class="k">import</span> <span class="n">Backend</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">Backend</span><span class="p">(</span><span class="n">storage_type</span><span class="o">=</span><span class="s1">&#39;integer_index&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">id_</span><span class="p">,</span> <span class="n">integer_index</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">id_</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier">sqlalchemy.ext.declarative.api.DeclarativeMeta</span></dt>
+<dd></dd>
+<dt><strong>deserialiser</strong> <span class="classifier-delimiter">:</span> <span class="classifier">builtin_function_or_method</span></dt>
+<dd></dd>
+<dt><strong>serialiser</strong> <span class="classifier-delimiter">:</span> <span class="classifier">builtin_function_or_method</span></dt>
+<dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.clear_queue">
+<code class="descname">clear_queue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/dbqueue.html#DatabaseQueue.clear_queue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.clear_queue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.drop_table">
+<code class="descname">drop_table</code><span class="sig-paren">(</span><em>sure=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/dbqueue.html#DatabaseQueue.drop_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.drop_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.enqueue">
+<code class="descname">enqueue</code><span class="sig-paren">(</span><em>feature</em>, <em>label=None</em>, <em>priority=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/dbqueue.html#DatabaseQueue.enqueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.enqueue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.enqueue_many">
+<code class="descname">enqueue_many</code><span class="sig-paren">(</span><em>features</em>, <em>labels=None</em>, <em>priorities=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/dbqueue.html#DatabaseQueue.enqueue_many"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.enqueue_many" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add items to the queue.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.from_config_file">
+<em class="property">classmethod </em><code class="descname">from_config_file</code><span class="sig-paren">(</span><em>config_path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/dbqueue.html#DatabaseQueue.from_config_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.from_config_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiate with database credentials from a configuration file.</p>
+<p>The config file should be an INI file with the following contents:</p>
+<p>[database]
+; dialect+driver://username:password&#64;host:port/database</p>
+<p>dialect=xxx
+driver=xxx
+username=xxx
+password=xxx
+host=xxx
+port=xxx
+database=xxx</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>config_path</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Path to database configuration file.</p>
+</dd>
+<dt><strong>storage_type</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
+<dd><p class="first last">One of ‘integer_index’, ‘pickle’ (default) or ‘json’.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.item">
+<code class="descname">item</code><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.item" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">QueueItem</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.list_all">
+<code class="descname">list_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/dbqueue.html#DatabaseQueue.list_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.list_all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.list_completed">
+<code class="descname">list_completed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/dbqueue.html#DatabaseQueue.list_completed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.list_completed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.list_labels">
+<code class="descname">list_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Set[str]<a class="reference internal" href="../_modules/superintendent/distributed/dbqueue.html#DatabaseQueue.list_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.list_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.list_uncompleted">
+<code class="descname">list_uncompleted</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/dbqueue.html#DatabaseQueue.list_uncompleted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.list_uncompleted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.pop">
+<code class="descname">pop</code><span class="sig-paren">(</span><em>timeout: int = 600) -&gt; (&lt;class 'int'&gt;</em>, <em>typing.Any</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/dbqueue.html#DatabaseQueue.pop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.pop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.progress">
+<code class="descname">progress</code><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.progress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.reorder">
+<code class="descname">reorder</code><span class="sig-paren">(</span><em>priorities: Dict[int, int]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/superintendent/distributed/dbqueue.html#DatabaseQueue.reorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.reorder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.session">
+<code class="descname">session</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/dbqueue.html#DatabaseQueue.session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.set_priorities">
+<code class="descname">set_priorities</code><span class="sig-paren">(</span><em>ids: Sequence[int], priorities: Sequence[int]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/dbqueue.html#DatabaseQueue.set_priorities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.set_priorities" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.submit">
+<code class="descname">submit</code><span class="sig-paren">(</span><em>id_: int</em>, <em>label: str</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/superintendent/distributed/dbqueue.html#DatabaseQueue.submit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.undo">
+<code class="descname">undo</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/superintendent/distributed/dbqueue.html#DatabaseQueue.undo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.undo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.distributed.dbqueue.DatabaseQueue.worker_id">
+<code class="descname">worker_id</code><em class="property"> = None</em><a class="headerlink" href="#superintendent.distributed.dbqueue.DatabaseQueue.worker_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-superintendent.distributed.multioutput">
+<span id="superintendent-distributed-multioutput-module"></span><h2>superintendent.distributed.multioutput module<a class="headerlink" href="#module-superintendent.distributed.multioutput" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="superintendent.distributed.multioutput.MultiLabeller">
+<em class="property">class </em><code class="descclassname">superintendent.distributed.multioutput.</code><code class="descname">MultiLabeller</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/multioutput.html#MultiLabeller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.multioutput.MultiLabeller" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="superintendent.multioutput.html#superintendent.multioutput.multilabeller.MultiLabeller" title="superintendent.multioutput.multilabeller.MultiLabeller"><code class="xref py py-class docutils literal notranslate"><span class="pre">superintendent.multioutput.multilabeller.MultiLabeller</span></code></a>, <a class="reference internal" href="#superintendent.distributed.semisupervisor.SemiSupervisor" title="superintendent.distributed.semisupervisor.SemiSupervisor"><code class="xref py py-class docutils literal notranslate"><span class="pre">superintendent.distributed.semisupervisor.SemiSupervisor</span></code></a></p>
+<p>A class for labelling your data.</p>
+<p>This class is designed to label data for (semi-)supervised learning
+algorithms. It allows you to label data. In the future, it will also allow
+you to re-train an algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>connection_string: str</strong></dt>
+<dd><p class="first last">A SQLAlchemy-compatible database connection string. This is where the
+data for this widget will be stored, and where it will be retrieved
+from for labelling.</p>
+</dd>
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, np.ndarray, pd.Series, pd.DataFrame, optional</span></dt>
+<dd><p class="first last">An array or sequence of data in which each element (if 1D) or each row
+(if 2D) represents one data point for which you’d like to generate
+labels.</p>
+</dd>
+<dt><strong>labels</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, np.ndarray, pd.Series, pd.DataFrame, optional</span></dt>
+<dd><p class="first last">If you already have some labels, but would like to re-label some, then
+you can pass these in as labels.</p>
+</dd>
+<dt><strong>options</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple, list</span></dt>
+<dd><p class="first last">The options presented for labelling.</p>
+</dd>
+<dt><strong>classifier</strong> <span class="classifier-delimiter">:</span> <span class="classifier">sklearn.base.ClassifierMixin, optional</span></dt>
+<dd><p class="first last">An object that implements the standard sklearn fit/predict methods. If
+provided, a button for retraining the model is shown, and the model
+performance under k-fold crossvalidation can be read as you go along.</p>
+</dd>
+<dt><strong>display_func</strong> <span class="classifier-delimiter">:</span> <span class="classifier">callable, optional</span></dt>
+<dd><p class="first last">A function that will be used to display the data. This function should
+take in two arguments, first the data to display, and second the number
+of data points to display (set to 1 for this class).</p>
+</dd>
+<dt><strong>eval_method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">callable, optional</span></dt>
+<dd><p class="first last">A function that accepts the classifier, features, and labels as input
+and returns a dictionary of values that contain the key ‘test_score’.
+The default is sklearn.model_selection.cross_validate, with cv=3. Use
+functools.partial to create a function with its parameters fixed.</p>
+</dd>
+<dt><strong>reorder</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, callable, optional</span></dt>
+<dd><p class="first last">One of the reordering algorithms specified in
+<a class="reference internal" href="superintendent.html#module-superintendent.prioritisation" title="superintendent.prioritisation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">superintendent.prioritisation</span></code></a>. This describes a function that
+receives input in the shape of n_samples, n_labels and calculates the
+priority in terms of information value in labelling a data point.</p>
+</dd>
+<dt><strong>shuffle_prop</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The proportion of points that are shuffled when the data points are
+re-ordered (see reorder keyword-argument). This controls the
+“exploration vs exploitation” trade-off - the higher, the more you
+explore the feature space randomly, the lower, the more you exploit
+your current weak points.</p>
+</dd>
+<dt><strong>keyboard_shortcuts</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><p class="first last">If you want to enable ipyevent-mediated keyboard capture to use the
+keyboard rather than the mouse to submit data.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-superintendent.distributed.semisupervisor">
+<span id="superintendent-distributed-semisupervisor-module"></span><h2>superintendent.distributed.semisupervisor module<a class="headerlink" href="#module-superintendent.distributed.semisupervisor" title="Permalink to this headline">¶</a></h2>
+<p>Tools to supervise classification.</p>
+<dl class="class">
+<dt id="superintendent.distributed.semisupervisor.SemiSupervisor">
+<em class="property">class </em><code class="descclassname">superintendent.distributed.semisupervisor.</code><code class="descname">SemiSupervisor</code><span class="sig-paren">(</span><em>connection_string='sqlite:///:memory:'</em>, <em>*args</em>, <em>worker_id=False</em>, <em>table_name='superintendent'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/semisupervisor.html#SemiSupervisor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.semisupervisor.SemiSupervisor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="superintendent.html#superintendent.semisupervisor.SemiSupervisor" title="superintendent.semisupervisor.SemiSupervisor"><code class="xref py py-class docutils literal notranslate"><span class="pre">superintendent.semisupervisor.SemiSupervisor</span></code></a></p>
+<p>A class for labelling your data.</p>
+<p>This class is designed to label data for (semi-)supervised learning
+algorithms. It allows you to label data. In the future, it will also allow
+you to re-train an algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>connection_string: str</strong></dt>
+<dd><p class="first last">A SQLAlchemy-compatible database connection string. This is where the
+data for this widget will be stored, and where it will be retrieved
+from for labelling.</p>
+</dd>
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, np.ndarray, pd.Series, pd.DataFrame, optional</span></dt>
+<dd><p class="first last">An array or sequence of data in which each element (if 1D) or each row
+(if 2D) represents one data point for which you’d like to generate
+labels.</p>
+</dd>
+<dt><strong>labels</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, np.ndarray, pd.Series, pd.DataFrame, optional</span></dt>
+<dd><p class="first last">If you already have some labels, but would like to re-label some, then
+you can pass these in as labels.</p>
+</dd>
+<dt><strong>options</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple, list</span></dt>
+<dd><p class="first last">The options presented for labelling.</p>
+</dd>
+<dt><strong>classifier</strong> <span class="classifier-delimiter">:</span> <span class="classifier">sklearn.base.ClassifierMixin, optional</span></dt>
+<dd><p class="first last">An object that implements the standard sklearn fit/predict methods. If
+provided, a button for retraining the model is shown, and the model
+performance under k-fold crossvalidation can be read as you go along.</p>
+</dd>
+<dt><strong>display_func</strong> <span class="classifier-delimiter">:</span> <span class="classifier">callable, optional</span></dt>
+<dd><p class="first last">A function that will be used to display the data. This function should
+take in two arguments, first the data to display, and second the number
+of data points to display (set to 1 for this class).</p>
+</dd>
+<dt><strong>eval_method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">callable, optional</span></dt>
+<dd><p class="first last">A function that accepts the classifier, features, and labels as input
+and returns a dictionary of values that contain the key ‘test_score’.
+The default is sklearn.model_selection.cross_validate, with cv=3. Use
+functools.partial to create a function with its parameters fixed.</p>
+</dd>
+<dt><strong>reorder</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, callable, optional</span></dt>
+<dd><p class="first last">One of the reordering algorithms specified in
+<a class="reference internal" href="superintendent.html#module-superintendent.prioritisation" title="superintendent.prioritisation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">superintendent.prioritisation</span></code></a>. This describes a function that
+receives input in the shape of n_samples, n_labels and calculates the
+priority in terms of information value in labelling a data point.</p>
+</dd>
+<dt><strong>shuffle_prop</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The proportion of points that are shuffled when the data points are
+re-ordered (see reorder keyword-argument). This controls the
+“exploration vs exploitation” trade-off - the higher, the more you
+explore the feature space randomly, the lower, the more you exploit
+your current weak points.</p>
+</dd>
+<dt><strong>keyboard_shortcuts</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><p class="first last">If you want to enable ipyevent-mediated keyboard capture to use the
+keyboard rather than the mouse to submit data.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="superintendent.distributed.semisupervisor.SemiSupervisor.orchestrate">
+<code class="descname">orchestrate</code><span class="sig-paren">(</span><em>interval_seconds: int = 30</em>, <em>shuffle_prop: float = 0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/semisupervisor.html#SemiSupervisor.orchestrate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.semisupervisor.SemiSupervisor.orchestrate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="superintendent.distributed.semisupervisor.SemiSupervisor.worker_id">
+<code class="descname">worker_id</code><a class="headerlink" href="#superintendent.distributed.semisupervisor.SemiSupervisor.worker_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A trait for unicode strings.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-superintendent.distributed.serialization">
+<span id="superintendent-distributed-serialization-module"></span><h2>superintendent.distributed.serialization module<a class="headerlink" href="#module-superintendent.distributed.serialization" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="superintendent.distributed.serialization.DataEncoder">
+<em class="property">class </em><code class="descclassname">superintendent.distributed.serialization.</code><code class="descname">DataEncoder</code><span class="sig-paren">(</span><em>*</em>, <em>skipkeys=False</em>, <em>ensure_ascii=True</em>, <em>check_circular=True</em>, <em>allow_nan=True</em>, <em>sort_keys=False</em>, <em>indent=None</em>, <em>separators=None</em>, <em>default=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/serialization.html#DataEncoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.serialization.DataEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">json.encoder.JSONEncoder</span></code></p>
+<dl class="method">
+<dt id="superintendent.distributed.serialization.DataEncoder.default">
+<code class="descname">default</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/serialization.html#DataEncoder.default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.serialization.DataEncoder.default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize numpy or pandas objects to json.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="superintendent.distributed.serialization.data_decoder">
+<code class="descclassname">superintendent.distributed.serialization.</code><code class="descname">data_decoder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/serialization.html#data_decoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.serialization.data_decoder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="superintendent.distributed.serialization.data_dumps">
+<code class="descclassname">superintendent.distributed.serialization.</code><code class="descname">data_dumps</code><span class="sig-paren">(</span><em>obj: Any</em><span class="sig-paren">)</span> &#x2192; Optional[str]<a class="reference internal" href="../_modules/superintendent/distributed/serialization.html#data_dumps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.serialization.data_dumps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="superintendent.distributed.serialization.data_loads">
+<code class="descclassname">superintendent.distributed.serialization.</code><code class="descname">data_loads</code><span class="sig-paren">(</span><em>obj: Optional[str]</em><span class="sig-paren">)</span> &#x2192; Any<a class="reference internal" href="../_modules/superintendent/distributed/serialization.html#data_loads"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.serialization.data_loads" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-superintendent.distributed">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-superintendent.distributed" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jan Freyberg
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/@jupyter-widgets/html-manager@^0.14.0/dist/embed-amd.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

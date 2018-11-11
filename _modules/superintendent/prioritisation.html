@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>superintendent.prioritisation &mdash; superintendent 0.2.2 documentation</title>
+  <title>superintendent.prioritisation &mdash; superintendent 0.3.1 documentation</title>
   
 
   
@@ -26,28 +26,20 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="Index"
-              href="../../genindex.html"/>
-        <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="superintendent 0.2.2 documentation" href="../../index.html"/>
-        <link rel="up" title="Module code" href="../index.html"/> 
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.5.0/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -64,7 +56,7 @@
 
           
             
-            <img src="../../_static/logo.png" class="logo" />
+            <img src="../../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -72,7 +64,7 @@
             
             
               <div class="version">
-                0.2.2
+                0.3.1
               </div>
             
           
@@ -98,8 +90,10 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../narrative.html">Example use cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../labelling-data.html">Labelling data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../active-learning.html">Active learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
 </ul>
 
             
@@ -111,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">superintendent</a>
@@ -119,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -151,8 +146,6 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
-        
       </li>
     
   </ul>
@@ -166,22 +159,21 @@
   <h1>Source code for superintendent.prioritisation</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Functions to prioritise labelling data points (to drive active learning).</span>
-
-<span class="sd">This module implements a range of functions that produce ordering of data based</span>
-<span class="sd">on class probabilities.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">scipy.stats</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span>
 
 
-<span class="k">def</span> <span class="nf">_shuffle_subset</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_shuffle_subset</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="n">to_shuffle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">shuffle_prop</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">data</span><span class="p">[</span><span class="n">to_shuffle</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">to_shuffle</span><span class="p">),</span> <span class="o">...</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">data</span>
 
 
-<div class="viewcode-block" id="entropy"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.prioritisation.entropy">[docs]</a><span class="k">def</span> <span class="nf">entropy</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<div class="viewcode-block" id="entropy"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.prioritisation.entropy">[docs]</a><span class="k">def</span> <span class="nf">entropy</span><span class="p">(</span>
+    <span class="n">probabilities</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sort by the entropy of the probabilities (high to low).</span>
 
@@ -198,7 +190,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ordered</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">entropy</span><span class="p">(</span><span class="n">probabilities</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">_shuffle_subset</span><span class="p">(</span><span class="n">ordered</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">_shuffle_subset</span><span class="p">(</span><span class="n">ordered</span><span class="o">.</span><span class="n">argsort</span><span class="p">(),</span> <span class="n">shuffle_prop</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="margin"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.prioritisation.margin">[docs]</a><span class="k">def</span> <span class="nf">margin</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
@@ -221,17 +213,35 @@
         <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
     <span class="p">)</span>
-    <span class="k">return</span> <span class="n">_shuffle_subset</span><span class="p">(</span><span class="n">ordered</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">_shuffle_subset</span><span class="p">(</span><span class="n">ordered</span><span class="o">.</span><span class="n">argsort</span><span class="p">(),</span> <span class="n">shuffle_prop</span><span class="p">)</span></div>
 
 
-<span class="n">functions</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;entropy&quot;</span><span class="p">:</span> <span class="n">entropy</span><span class="p">,</span> <span class="s2">&quot;margin&quot;</span><span class="p">:</span> <span class="n">margin</span><span class="p">}</span>
+<div class="viewcode-block" id="certainty"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.prioritisation.certainty">[docs]</a><span class="k">def</span> <span class="nf">certainty</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sort by the certainty of the maximum prediction.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    probabilities : np.ndarray</span>
+<span class="sd">        An array of probabilities, with the shape n_samples,</span>
+<span class="sd">        n_classes</span>
+<span class="sd">    shuffle_prop : float</span>
+<span class="sd">        The proportion of data points that should be randomly shuffled. This</span>
+<span class="sd">        means the sorting retains some randomness, to avoid biasing your</span>
+<span class="sd">        new labels and catching any minority classes the algorithm currently</span>
+<span class="sd">        classifies as a different label.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ordered</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">_shuffle_subset</span><span class="p">(</span><span class="n">ordered</span><span class="o">.</span><span class="n">argsort</span><span class="p">(),</span> <span class="n">shuffle_prop</span><span class="p">)</span></div>
+
+
+<span class="n">functions</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;entropy&quot;</span><span class="p">:</span> <span class="n">entropy</span><span class="p">,</span> <span class="s2">&quot;margin&quot;</span><span class="p">:</span> <span class="n">margin</span><span class="p">,</span> <span class="s2">&quot;certainty&quot;</span><span class="p">:</span> <span class="n">certainty</span><span class="p">}</span>
 <span class="sd">&quot;&quot;&quot;A dictionary of functions to prioritise data.&quot;&quot;&quot;</span>
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -240,11 +250,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Jan Freyberg.
+        &copy; Copyright 2018, Jan Freyberg
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -259,36 +269,26 @@
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../',
-            VERSION:'0.2.2',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/@jupyter-widgets/html-manager@^0.14.0/dist/embed-amd.js"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

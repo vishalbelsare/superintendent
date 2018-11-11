@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>superintendent.semisupervisor &mdash; superintendent 0.2.2 documentation</title>
+  <title>superintendent.semisupervisor &mdash; superintendent 0.3.1 documentation</title>
   
 
   
@@ -26,28 +26,20 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="Index"
-              href="../../genindex.html"/>
-        <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="superintendent 0.2.2 documentation" href="../../index.html"/>
-        <link rel="up" title="Module code" href="../index.html"/> 
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.5.0/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -64,7 +56,7 @@
 
           
             
-            <img src="../../_static/logo.png" class="logo" />
+            <img src="../../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -72,7 +64,7 @@
             
             
               <div class="version">
-                0.2.2
+                0.3.1
               </div>
             
           
@@ -98,8 +90,10 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../narrative.html">Example use cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../labelling-data.html">Labelling data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../active-learning.html">Active learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
 </ul>
 
             
@@ -111,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">superintendent</a>
@@ -119,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -151,8 +146,6 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
-        
       </li>
     
   </ul>
@@ -166,21 +159,22 @@
   <h1>Source code for superintendent.semisupervisor</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Tools to supervise classification.&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">deque</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>
+
+<span class="c1"># import numpy as np</span>
 <span class="kn">import</span> <span class="nn">sklearn.model_selection</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">base</span><span class="p">,</span> <span class="n">validation</span><span class="p">,</span> <span class="n">prioritisation</span>
-<span class="kn">from</span> <span class="nn">.display</span> <span class="k">import</span> <span class="n">get_values</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">base</span><span class="p">,</span> <span class="n">prioritisation</span><span class="p">,</span> <span class="n">validation</span>
+<span class="kn">from</span> <span class="nn">.queueing</span> <span class="k">import</span> <span class="n">SimpleLabellingQueue</span>
 
 
 <div class="viewcode-block" id="SemiSupervisor"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.semisupervisor.SemiSupervisor">[docs]</a><span class="k">class</span> <span class="nc">SemiSupervisor</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">Labeller</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A class for labelling your data.</span>
+<span class="sd">    A widget for labelling your data.</span>
 
 <span class="sd">    This class is designed to label data for (semi-)supervised learning</span>
 <span class="sd">    algorithms. It allows you to label data. In the future, it will also allow</span>
@@ -188,21 +182,23 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    features : list, np.ndarray, pd.Series, pd.DataFrame</span>
+<span class="sd">    features : list, np.ndarray, pd.Series, pd.DataFrame, optional</span>
 <span class="sd">        An array or sequence of data in which each element (if 1D) or each row</span>
 <span class="sd">        (if 2D) represents one data point for which you&#39;d like to generate</span>
 <span class="sd">        labels.</span>
 <span class="sd">    labels : list, np.ndarray, pd.Series, pd.DataFrame, optional</span>
 <span class="sd">        If you already have some labels, but would like to re-label some, then</span>
 <span class="sd">        you can pass these in as labels.</span>
-<span class="sd">    classifier : sklearn.base.ClassifierMixin, optional</span>
-<span class="sd">        An object that implements the standard sklearn fit/predict methods. If</span>
-<span class="sd">        provided, a button for retraining the model is shown, and the model</span>
-<span class="sd">        performance under k-fold crossvalidation can be read as you go along.</span>
+<span class="sd">    options : tuple, list</span>
+<span class="sd">        The options presented for labelling.</span>
 <span class="sd">    display_func : callable, optional</span>
 <span class="sd">        A function that will be used to display the data. This function should</span>
 <span class="sd">        take in two arguments, first the data to display, and second the number</span>
 <span class="sd">        of data points to display (set to 1 for this class).</span>
+<span class="sd">    classifier : sklearn.base.ClassifierMixin, optional</span>
+<span class="sd">        An object that implements the standard sklearn fit/predict methods. If</span>
+<span class="sd">        provided, a button for retraining the model is shown, and the model</span>
+<span class="sd">        performance under k-fold crossvalidation can be read as you go along.</span>
 <span class="sd">    eval_method : callable, optional</span>
 <span class="sd">        A function that accepts the classifier, features, and labels as input</span>
 <span class="sd">        and returns a dictionary of values that contain the key &#39;test_score&#39;.</span>
@@ -219,21 +215,25 @@
 <span class="sd">        &quot;exploration vs exploitation&quot; trade-off - the higher, the more you</span>
 <span class="sd">        explore the feature space randomly, the lower, the more you exploit</span>
 <span class="sd">        your current weak points.</span>
-<span class="sd">    keyboard_shortcuts : bool, optional</span>
-<span class="sd">        If you want to enable ipyevent-mediated keyboard capture to use the</span>
-<span class="sd">        keyboard rather than the mouse to submit data.</span>
-
+<span class="sd">    hints : dict, optional</span>
+<span class="sd">        A dictionary mapping class labels to example data points from that</span>
+<span class="sd">        class. Hints are displayed with the same function as the main data, so</span>
+<span class="sd">        should be in the same format.</span>
+<span class="sd">    keyboard_shortcuts : bool</span>
+<span class="sd">        Whether keyboard shortcuts should be enabled for this widget.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">features</span><span class="p">,</span>
+        <span class="n">features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">options</span><span class="o">=</span><span class="p">(),</span>
         <span class="n">classifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">display_func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">eval_method</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">reorder</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">shuffle_prop</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">hints</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">keyboard_shortcuts</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="o">*</span><span class="n">args</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span>
@@ -248,15 +248,20 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">features</span><span class="p">,</span>
+            <span class="n">features</span><span class="o">=</span><span class="n">features</span><span class="p">,</span>
             <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
             <span class="n">display_func</span><span class="o">=</span><span class="n">display_func</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
             <span class="n">keyboard_shortcuts</span><span class="o">=</span><span class="n">keyboard_shortcuts</span><span class="p">,</span>
+            <span class="n">hints</span><span class="o">=</span><span class="n">hints</span><span class="p">,</span>
             <span class="o">*</span><span class="n">args</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_size</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">SimpleLabellingQueue</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">shuffle_prop</span> <span class="o">=</span> <span class="n">shuffle_prop</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">validation</span><span class="o">.</span><span class="n">valid_classifier</span><span class="p">(</span><span class="n">classifier</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">retrain_button</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
@@ -278,6 +283,7 @@
                     <span class="n">layout</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s2">&quot;50%&quot;</span><span class="p">),</span>
                 <span class="p">),</span>
             <span class="p">)</span>
+
         <span class="k">if</span> <span class="n">eval_method</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">eval_method</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
                 <span class="n">sklearn</span><span class="o">.</span><span class="n">model_selection</span><span class="o">.</span><span class="n">cross_validate</span><span class="p">,</span>
@@ -285,113 +291,61 @@
                 <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
                 <span class="n">return_train_score</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="n">eval_method</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The eval_method needs to be a callable.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eval_method</span> <span class="o">=</span> <span class="n">eval_method</span>
+
         <span class="k">if</span> <span class="n">reorder</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reorder</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">reorder</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">prioritisation</span><span class="o">.</span><span class="n">functions</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="bp">NotImplemented</span><span class="p">(</span>
-                    <span class="s2">&quot;Unknown reordering function </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reorder</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                    <span class="s2">&quot;Unknown reordering function &#39;</span><span class="si">{}</span><span class="s2">&#39;.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reorder</span><span class="p">)</span>
                 <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reorder</span> <span class="o">=</span> <span class="n">prioritisation</span><span class="o">.</span><span class="n">functions</span><span class="p">[</span><span class="n">reorder</span><span class="p">]</span>
         <span class="k">elif</span> <span class="n">reorder</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">callable</span><span class="p">(</span><span class="n">reorder</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reorder</span> <span class="o">=</span> <span class="n">reorder</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">reorder</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reorder</span> <span class="o">=</span> <span class="kc">None</span>
-
-<div class="viewcode-block" id="SemiSupervisor.annotate"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.semisupervisor.SemiSupervisor.annotate">[docs]</a>    <span class="k">def</span> <span class="nf">annotate</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">relabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shortcuts</span><span class="o">=</span><span class="kc">None</span>
-    <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Provide labels for items that don&#39;t have any labels.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        relabel : np.array, pd.Series, list, optional</span>
-<span class="sd">            A boolean array-like that is true for each label you would like to</span>
-<span class="sd">            re-label. Only one other special case is implemented - if you pass</span>
-<span class="sd">            a single value, all data with that label will be re-labelled. If</span>
-<span class="sd">            None (default), all data is relabelled.</span>
-<span class="sd">        options : np.array, pd.Series, list, optional</span>
-<span class="sd">            the options for re-labelling. If None, all unique values in labels</span>
-<span class="sd">            is offered.</span>
-<span class="sd">        shuffle : bool</span>
-<span class="sd">            Whether to randomise the order of relabelling (default True)</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">relabel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">relabel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">relabel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">relabel</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">relabel</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="c1"># special case of relabelling one class</span>
-            <span class="n">relabel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">==</span> <span class="n">relabel</span>
-        <span class="k">elif</span> <span class="n">relabel</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;The size of the relabel array has to match &quot;</span>
-                <span class="s2">&quot;the size of the labels passed on creation.&quot;</span>
+                <span class="s2">&quot;The reorder argument needs to be either a function or the &quot;</span>
+                <span class="s2">&quot;name of a function listed in superintendent.prioritisation.&quot;</span>
             <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">relabel</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;relabel should be a boolean array.&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">options</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">options</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">)])</span>
-        <span class="n">options</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">option</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">options</span><span class="p">):</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">options</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="k">pass</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">input_widget</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">options</span>
-
-        <span class="n">relabel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">relabel</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-
-        <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">relabel</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_label_queue</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="n">relabel</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_already_labelled</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([])</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">_annotation_loop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_annotation_iterator</span><span class="p">()</span>
-        <span class="c1"># reset the progress bar</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">progressbar</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label_queue</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">progressbar</span><span class="o">.</span><span class="n">bar_style</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">progressbar</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
-
-        <span class="c1"># start the iteration cycle</span>
-        <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_annotation_loop</span><span class="p">)</span></div>
+        <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_annotation_loop</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compose</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_annotation_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Relabel should be integer indices&quot;&quot;&quot;</span>
 
-        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label_queue</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label_queue</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_already_labelled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
-            <span class="n">row</span> <span class="o">=</span> <span class="n">get_values</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">progressbar</span><span class="o">.</span><span class="n">bar_style</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">id_</span><span class="p">,</span> <span class="n">datapoint</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="p">:</span>
 
-            <span class="n">new_val</span> <span class="o">=</span> <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compose</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">new_val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">new_val</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="c1"># catching assignment of string to number array</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="p">(</span><span class="n">datapoint</span><span class="p">)</span>
+            <span class="n">sender</span> <span class="o">=</span> <span class="k">yield</span>
 
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span><span class="p">,</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_val</span>
+            <span class="k">if</span> <span class="n">sender</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;__undo__&quot;</span><span class="p">:</span>
+                <span class="c1"># unpop the current item:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
+                <span class="c1"># unpop and unlabel the previous item:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
+                <span class="c1"># try to remove any labels not in the assigned labels:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">input_widget</span><span class="o">.</span><span class="n">remove_options</span><span class="p">(</span>
+                    <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_widget</span><span class="o">.</span><span class="n">options</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">list_labels</span><span class="p">()</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">sender</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;__skip__&quot;</span><span class="p">:</span>
+                <span class="k">pass</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_val</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">new_val</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_widget</span><span class="o">.</span><span class="n">options</span>
-                    <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_val</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;nan&#39;</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">input_widget</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_widget</span><span class="o">.</span><span class="n">options</span> <span class="o">+</span> <span class="p">[</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">new_val</span><span class="p">)</span>
-                <span class="p">]</span>
+                <span class="n">new_label</span> <span class="o">=</span> <span class="n">sender</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">id_</span><span class="p">,</span> <span class="n">new_label</span><span class="p">)</span>
+                <span class="c1"># self.input_widget.add_hint(new_label, datapoint)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">progressbar</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">progress</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_manager</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">event_manager</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
         <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_render_finished</span><span class="p">()</span>
 
 <div class="viewcode-block" id="SemiSupervisor.retrain"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.semisupervisor.SemiSupervisor.retrain">[docs]</a>    <span class="k">def</span> <span class="nf">retrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
@@ -403,38 +357,57 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No classifier to retrain.&quot;</span><span class="p">)</span>
-        <span class="n">labelled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">X</span> <span class="o">=</span> <span class="n">get_values</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">labelled</span><span class="p">)</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">get_values</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_labels</span><span class="p">,</span> <span class="n">labelled</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_render_processing</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;Retraining... &quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">performance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">model_performance</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;Score: </span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">performance</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">list_labels</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model_performance</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Score: Not enough labels to retrain.&quot;</span>
             <span class="p">)</span>
-        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">performance</span> <span class="o">=</span> <span class="s2">&quot;not available (too few labelled points)&quot;</span>
+            <span class="k">return</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">labelled_X</span><span class="p">,</span> <span class="n">labelled_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">list_completed</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_render_processing</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;Retraining... &quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">performance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_method</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="p">,</span> <span class="n">labelled_X</span><span class="p">,</span> <span class="n">labelled_y</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">model_performance</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;Score: </span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">performance</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+                <span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">performance</span> <span class="o">=</span> <span class="s2">&quot;Could not evaluate&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model_performance</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;Score: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">performance</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">labelled_X</span><span class="p">,</span> <span class="n">labelled_y</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reorder</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_label_queue</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label_queue</span><span class="p">)[</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">reorder</span><span class="p">(</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span>
-                            <span class="n">get_values</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label_queue</span><span class="p">))</span>
-                        <span class="p">),</span>
-                        <span class="n">shuffle_prop</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">shuffle_prop</span>
-                    <span class="p">)</span>
-                <span class="p">]</span>
+            <span class="n">ids</span><span class="p">,</span> <span class="n">unlabelled_X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">list_uncompleted</span><span class="p">()</span>
+
+            <span class="n">reordering</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reorder</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">unlabelled_X</span><span class="p">),</span>
+                    <span class="n">shuffle_prop</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">shuffle_prop</span><span class="p">,</span>
+                <span class="p">)</span>
             <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_compose</span><span class="p">()</span></div></div>
+            <span class="n">new_order</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span>
+                <span class="p">[(</span><span class="n">id_</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="k">for</span> <span class="n">id_</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">reordering</span><span class="p">))]</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">reorder</span><span class="p">(</span><span class="n">new_order</span><span class="p">)</span>
+
+        <span class="c1"># undo the previously popped item and pop the next one</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_annotation_loop</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;__skip__&quot;</span><span class="p">})</span></div></div>
+        <span class="c1"># self._compose()</span>
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -443,11 +416,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Jan Freyberg.
+        &copy; Copyright 2018, Jan Freyberg
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -462,36 +435,26 @@
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../',
-            VERSION:'0.2.2',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/@jupyter-widgets/html-manager@^0.14.0/dist/embed-amd.js"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

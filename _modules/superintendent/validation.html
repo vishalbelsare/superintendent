@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>superintendent.validation &mdash; superintendent 0.2.2 documentation</title>
+  <title>superintendent.validation &mdash; superintendent 0.3.1 documentation</title>
   
 
   
@@ -26,28 +26,20 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="Index"
-              href="../../genindex.html"/>
-        <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="superintendent 0.2.2 documentation" href="../../index.html"/>
-        <link rel="up" title="Module code" href="../index.html"/> 
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.5.0/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -64,7 +56,7 @@
 
           
             
-            <img src="../../_static/logo.png" class="logo" />
+            <img src="../../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -72,7 +64,7 @@
             
             
               <div class="version">
-                0.2.2
+                0.3.1
               </div>
             
           
@@ -98,8 +90,10 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../narrative.html">Example use cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../labelling-data.html">Labelling data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../active-learning.html">Active learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
 </ul>
 
             
@@ -111,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">superintendent</a>
@@ -119,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -151,8 +146,6 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
-        
       </li>
     
   </ul>
@@ -165,11 +158,13 @@
             
   <h1>Source code for superintendent.validation</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Functions to validate arguments.&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Any</span>
+
+<span class="c1"># import numpy as np</span>
+<span class="c1"># import pandas as pd</span>
 
 
-<div class="viewcode-block" id="valid_classifier"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.validation.valid_classifier">[docs]</a><span class="k">def</span> <span class="nf">valid_classifier</span><span class="p">(</span><span class="n">classifier</span><span class="p">):</span>
+<div class="viewcode-block" id="valid_classifier"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.validation.valid_classifier">[docs]</a><span class="k">def</span> <span class="nf">valid_classifier</span><span class="p">(</span><span class="n">classifier</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if an object conforms to sklearns fit / predict interface.</span>
 
@@ -181,7 +176,7 @@
     <span class="k">if</span> <span class="p">(</span>
         <span class="n">classifier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="s2">&quot;fit&quot;</span><span class="p">)</span>
-        <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="s2">&quot;predict&quot;</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="s2">&quot;predict_proba&quot;</span><span class="p">)</span>
     <span class="p">):</span>
         <span class="k">return</span> <span class="n">classifier</span>
     <span class="k">elif</span> <span class="n">classifier</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -189,34 +184,36 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="s2">&quot;The classifier needs to conform to &quot;</span>
-            <span class="s2">&quot;the sklearn interface (fit/predict).&quot;</span>
+            <span class="s2">&quot;the sklearn interface (fit/predict_proba).&quot;</span>
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="valid_data"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.validation.valid_data">[docs]</a><span class="k">def</span> <span class="nf">valid_data</span><span class="p">(</span><span class="n">features</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Check if an object is an array or can be turned into one.</span>
+<span class="c1"># def valid_data(features: Optional[Any]):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Check if an object is an array or can be turned into one.</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    features : pd.DataFrame, pd.Series, np.ndarray</span>
-<span class="sd">        the data to double-check.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
-        <span class="k">return</span> <span class="n">features</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s2">&quot;The features need to be an array, array-like, or &quot;</span>
-            <span class="s2">&quot;a pandas DataFrame / Series.&quot;</span>
-        <span class="p">)</span></div>
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     features : pd.DataFrame, pd.Series, np.ndarray</span>
+<span class="c1">#         the data to double-check.</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     if features is None:</span>
+<span class="c1">#         return None</span>
+<span class="c1">#     if isinstance(</span>
+<span class="c1">#         features, (pd.DataFrame, pd.Series, np.ndarray, list, tuple)</span>
+<span class="c1">#     ):</span>
+<span class="c1">#         return features</span>
+<span class="c1">#     # elif isinstance(features, (list, tuple)):</span>
+<span class="c1">#     #     return np.array(features)</span>
+<span class="c1">#     else:</span>
+<span class="c1">#         raise ValueError(</span>
+<span class="c1">#             &quot;The features need to be an array, sequence, or &quot;</span>
+<span class="c1">#             &quot;a pandas DataFrame / Series.&quot;</span>
+<span class="c1">#         )</span>
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -225,11 +222,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Jan Freyberg.
+        &copy; Copyright 2018, Jan Freyberg
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -244,36 +241,26 @@
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../',
-            VERSION:'0.2.2',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/@jupyter-widgets/html-manager@^0.14.0/dist/embed-amd.js"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

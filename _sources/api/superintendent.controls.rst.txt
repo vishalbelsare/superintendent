@@ -1,0 +1,78 @@
+superintendent.controls package
+===============================
+
+Submodules
+----------
+
+superintendent.controls.buttongroup module
+------------------------------------------
+
+.. automodule:: superintendent.controls.buttongroup
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+superintendent.controls.dropdownbutton module
+---------------------------------------------
+
+.. automodule:: superintendent.controls.dropdownbutton
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+superintendent.controls.hintedmultiselect module
+------------------------------------------------
+
+.. automodule:: superintendent.controls.hintedmultiselect
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+superintendent.controls.keycapture module
+-----------------------------------------
+
+.. automodule:: superintendent.controls.keycapture
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+superintendent.controls.multiclasssubmitter module
+--------------------------------------------------
+
+.. automodule:: superintendent.controls.multiclasssubmitter
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+superintendent.controls.submitter module
+----------------------------------------
+
+.. automodule:: superintendent.controls.submitter
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+superintendent.controls.timer module
+------------------------------------
+
+.. automodule:: superintendent.controls.timer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+superintendent.controls.togglebuttongroup module
+------------------------------------------------
+
+.. automodule:: superintendent.controls.togglebuttongroup
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: superintendent.controls
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,51 +1,60 @@
 superintendent package
 ======================
 
+Subpackages
+-----------
+
+.. toctree::
+
+    superintendent.controls
+    superintendent.distributed
+    superintendent.multioutput
+
 Submodules
 ----------
 
-superintendent\.clustersupervisor module
-----------------------------------------
+superintendent.clustersupervisor module
+---------------------------------------
 
 .. automodule:: superintendent.clustersupervisor
     :members:
     :undoc-members:
     :show-inheritance:
 
-superintendent\.controls module
--------------------------------
-
-.. automodule:: superintendent.controls
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-superintendent\.display module
-------------------------------
+superintendent.display module
+-----------------------------
 
 .. automodule:: superintendent.display
     :members:
     :undoc-members:
     :show-inheritance:
 
-superintendent\.prioritisation module
--------------------------------------
+superintendent.prioritisation module
+------------------------------------
 
 .. automodule:: superintendent.prioritisation
     :members:
     :undoc-members:
     :show-inheritance:
 
-superintendent\.semisupervisor module
--------------------------------------
+superintendent.queueing module
+------------------------------
+
+.. automodule:: superintendent.queueing
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+superintendent.semisupervisor module
+------------------------------------
 
 .. automodule:: superintendent.semisupervisor
     :members:
     :undoc-members:
     :show-inheritance:
 
-superintendent\.validation module
----------------------------------
+superintendent.validation module
+--------------------------------
 
 .. automodule:: superintendent.validation
     :members:

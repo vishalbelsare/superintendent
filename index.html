@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Superintendent documentation &mdash; superintendent 0.2.2 documentation</title>
+  <title>Superintendent documentation &mdash; superintendent 0.3.1 documentation</title>
   
 
   
@@ -26,28 +26,21 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="superintendent 0.2.2 documentation" href="#"/>
-        <link rel="next" title="Superintendent" href="narrative.html"/> 
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.5.0/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -64,7 +57,7 @@
 
           
             
-            <img src="_static/logo.png" class="logo" />
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -72,7 +65,7 @@
             
             
               <div class="version">
-                0.2.2
+                0.3.1
               </div>
             
           
@@ -98,8 +91,10 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="narrative.html">Example use cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/modules.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="labelling-data.html">Labelling data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="active-learning.html">Active learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a></li>
 </ul>
 
             
@@ -111,7 +106,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="#">superintendent</a>
@@ -119,9 +114,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -163,30 +159,66 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="superintendent-documentation">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="superintendent-documentation">
 <h1>Superintendent documentation<a class="headerlink" href="#superintendent-documentation" title="Permalink to this headline">¶</a></h1>
 <a class="reference external image-reference" href="https://travis-ci.org/janfreyberg/superintendent"><img alt="Build Status" src="https://travis-ci.org/janfreyberg/superintendent.svg?branch=master" /></a>
 <a class="reference external image-reference" href="https://badge.fury.io/py/superintendent"><img alt="PyPI version" src="https://badge.fury.io/py/superintendent.svg" /></a>
 <a class="reference external image-reference" href="https://opensource.org/licenses/MIT"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" /></a>
-<p>Superintendent is designed to provide flexible <code class="docutils literal"><span class="pre">ipywidget</span></code>-based tools for
-labelling your data and growing your algorithm. At the moment this is restricted
-to simply giving you the ability to label your data, but in the future, the
-package will allow you to synergise with your algorithm and label only the data
-that’s worth labelling.</p>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/janfreyberg/superintendent/master"><img alt="Binder" src="https://mybinder.org/badge.svg" /></a>
+<a class="reference external image-reference" href="https://coveralls.io/github/janfreyberg/superintendent"><img alt="Coverage Status" src="https://coveralls.io/repos/github/janfreyberg/superintendent/badge.svg" /></a>
+<p>Superintendet provides two things: it allows you to interactively label your
+data, and it allows you to do this labelling “actively”, i.e. with a
+statistical or machine learning model supporting you.</p>
+<p><code class="docutils literal notranslate"><span class="pre">superintendent</span></code> is a set of <code class="docutils literal notranslate"><span class="pre">ipywidget</span></code>-based interactive labelling tools for
+your data. It allows you to flexibly label all kinds of data.</p>
+<p>It also allows you to combine your data-labelling task with a statistical or
+machine learning model to enable quick and practical active learning.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="narrative.html">Example use cases</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="narrative.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="narrative.html#use-case-1-labelling-individual-data-points">Use case 1: Labelling individual data points</a></li>
-<li class="toctree-l2"><a class="reference internal" href="narrative.html#use-case-2-labelling-clusters">Use case 2: Labelling clusters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="narrative.html#use-case-3-labelling-images">Use case 3: labelling images</a></li>
-<li class="toctree-l2"><a class="reference internal" href="narrative.html#use-case-4-labelling-clusters-of-images">Use case 4: labelling clusters of images</a></li>
-<li class="toctree-l2"><a class="reference internal" href="narrative.html#use-case-5-active-learning">Use case 5: Active learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#development-installation">Development installation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api/modules.html">API Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/superintendent.html">superintendent package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="labelling-data.html">Labelling data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="labelling-data.html#Getting-started:-labelling-data-points">Getting started: labelling data points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelling-data.html#Assigning-more-than-one-label-per-data-point">Assigning more than one label per data point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelling-data.html#Labelling-clusters-of-points">Labelling clusters of points</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="active-learning.html">Active learning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="active-learning.html#What-is-active-learning?">What is active learning?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="active-learning.html#Active-learning-in-superintendent">Active learning in <code class="docutils literal notranslate"><span class="pre">superintendent</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="active-learning.html#Active-learning-strategies">Active learning strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="active-learning.html#Active-learning-for-multi-output-widgets">Active learning for multi-output widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="active-learning.html#Preprocessing-data-before-passing-it-to-the-model">Preprocessing data before passing it to the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="active-learning.html#What-model-to-choose">What model to choose</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/labelling-text.html">Labelling text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/labelling-images.html">Labelling images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/labelling-images-actively.html">Labelling images with active learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/preprocessing-data.html">Custom pre-processing steps as part of superintendent</a></li>
 </ul>
 </li>
 </ul>
@@ -203,15 +235,13 @@ that’s worth labelling.</p>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="narrative.html" class="btn btn-neutral float-right" title="Superintendent" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>
@@ -221,11 +251,11 @@ that’s worth labelling.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Jan Freyberg.
+        &copy; Copyright 2018, Jan Freyberg
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -240,36 +270,26 @@ that’s worth labelling.</p>
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'0.2.2',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/@jupyter-widgets/html-manager@^0.14.0/dist/embed-amd.js"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

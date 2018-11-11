@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>superintendent.distributed.multioutput &mdash; superintendent 0.3.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.5.0/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> superintendent
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../labelling-data.html">Labelling data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../active-learning.html">Active learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">superintendent</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>superintendent.distributed.multioutput</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for superintendent.distributed.multioutput</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">..multioutput</span> <span class="k">import</span> <span class="n">MultiLabeller</span> <span class="k">as</span> <span class="n">NonDistributedMultiLabeller</span>
+<span class="kn">from</span> <span class="nn">.semisupervisor</span> <span class="k">import</span> <span class="n">SemiSupervisor</span>
+
+
+<div class="viewcode-block" id="MultiLabeller"><a class="viewcode-back" href="../../../api/superintendent.distributed.html#superintendent.distributed.multioutput.MultiLabeller">[docs]</a><span class="k">class</span> <span class="nc">MultiLabeller</span><span class="p">(</span><span class="n">NonDistributedMultiLabeller</span><span class="p">,</span> <span class="n">SemiSupervisor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class for labelling your data.</span>
+
+<span class="sd">    This class is designed to label data for (semi-)supervised learning</span>
+<span class="sd">    algorithms. It allows you to label data. In the future, it will also allow</span>
+<span class="sd">    you to re-train an algorithm.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    connection_string: str</span>
+<span class="sd">        A SQLAlchemy-compatible database connection string. This is where the</span>
+<span class="sd">        data for this widget will be stored, and where it will be retrieved</span>
+<span class="sd">        from for labelling.</span>
+<span class="sd">    features : list, np.ndarray, pd.Series, pd.DataFrame, optional</span>
+<span class="sd">        An array or sequence of data in which each element (if 1D) or each row</span>
+<span class="sd">        (if 2D) represents one data point for which you&#39;d like to generate</span>
+<span class="sd">        labels.</span>
+<span class="sd">    labels : list, np.ndarray, pd.Series, pd.DataFrame, optional</span>
+<span class="sd">        If you already have some labels, but would like to re-label some, then</span>
+<span class="sd">        you can pass these in as labels.</span>
+<span class="sd">    options : tuple, list</span>
+<span class="sd">        The options presented for labelling.</span>
+<span class="sd">    classifier : sklearn.base.ClassifierMixin, optional</span>
+<span class="sd">        An object that implements the standard sklearn fit/predict methods. If</span>
+<span class="sd">        provided, a button for retraining the model is shown, and the model</span>
+<span class="sd">        performance under k-fold crossvalidation can be read as you go along.</span>
+<span class="sd">    display_func : callable, optional</span>
+<span class="sd">        A function that will be used to display the data. This function should</span>
+<span class="sd">        take in two arguments, first the data to display, and second the number</span>
+<span class="sd">        of data points to display (set to 1 for this class).</span>
+<span class="sd">    eval_method : callable, optional</span>
+<span class="sd">        A function that accepts the classifier, features, and labels as input</span>
+<span class="sd">        and returns a dictionary of values that contain the key &#39;test_score&#39;.</span>
+<span class="sd">        The default is sklearn.model_selection.cross_validate, with cv=3. Use</span>
+<span class="sd">        functools.partial to create a function with its parameters fixed.</span>
+<span class="sd">    reorder : str, callable, optional</span>
+<span class="sd">        One of the reordering algorithms specified in</span>
+<span class="sd">        :py:mod:`superintendent.prioritisation`. This describes a function that</span>
+<span class="sd">        receives input in the shape of n_samples, n_labels and calculates the</span>
+<span class="sd">        priority in terms of information value in labelling a data point.</span>
+<span class="sd">    shuffle_prop : float</span>
+<span class="sd">        The proportion of points that are shuffled when the data points are</span>
+<span class="sd">        re-ordered (see reorder keyword-argument). This controls the</span>
+<span class="sd">        &quot;exploration vs exploitation&quot; trade-off - the higher, the more you</span>
+<span class="sd">        explore the feature space randomly, the lower, the more you exploit</span>
+<span class="sd">        your current weak points.</span>
+<span class="sd">    keyboard_shortcuts : bool, optional</span>
+<span class="sd">        If you want to enable ipyevent-mediated keyboard capture to use the</span>
+<span class="sd">        keyboard rather than the mouse to submit data.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jan Freyberg
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/@jupyter-widgets/html-manager@^0.14.0/dist/embed-amd.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
