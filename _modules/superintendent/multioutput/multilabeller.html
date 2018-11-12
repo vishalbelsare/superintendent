@@ -94,6 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../labelling-data.html">Labelling data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../active-learning.html">Active learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../distributing-labelling.html">Distributed labelling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/index.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
 </ul>
 
@@ -169,7 +170,7 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">prioritisation</span>
 
 
-<div class="viewcode-block" id="MultiLabeller"><a class="viewcode-back" href="../../../api/superintendent.multioutput.html#superintendent.multioutput.multilabeller.MultiLabeller">[docs]</a><span class="k">class</span> <span class="nc">MultiLabeller</span><span class="p">(</span><span class="n">semisupervisor</span><span class="o">.</span><span class="n">SemiSupervisor</span><span class="p">):</span>
+<div class="viewcode-block" id="MultiLabeller"><a class="viewcode-back" href="../../../api/index.html#superintendent.MultiLabeller">[docs]</a><span class="k">class</span> <span class="nc">MultiLabeller</span><span class="p">(</span><span class="n">semisupervisor</span><span class="o">.</span><span class="n">SemiSupervisor</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A widget for assigning more than one label to each data point.</span>
 
@@ -274,7 +275,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">event_manager</span><span class="o">.</span><span class="n">on_dom_event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_widget</span><span class="o">.</span><span class="n">_on_key_down</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_compose</span><span class="p">()</span>
 
-<div class="viewcode-block" id="MultiLabeller.retrain"><a class="viewcode-back" href="../../../api/superintendent.multioutput.html#superintendent.multioutput.multilabeller.MultiLabeller.retrain">[docs]</a>    <span class="k">def</span> <span class="nf">retrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="MultiLabeller.retrain"><a class="viewcode-back" href="../../../api/index.html#superintendent.MultiLabeller.retrain">[docs]</a>    <span class="k">def</span> <span class="nf">retrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Retrain the classifier you passed when creating this widget.</span>
 
 <span class="sd">        This calls the fit method of your class with the data that you&#39;ve</span>

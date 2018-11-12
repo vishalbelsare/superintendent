@@ -1,0 +1,1026 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API Reference &mdash; superintendent 0.4.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.5.0/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Examples" href="../examples/index.html" />
+    <link rel="prev" title="Distributing labelling across multiple people" href="../distributing-labelling.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> superintendent
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labelling-data.html">Labelling data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../active-learning.html">Active learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributing-labelling.html">Distributed labelling</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#data-labelling-widgets">Data labelling widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#distributed-data-labelling-widgets">Distributed data labelling widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#active-learning-functions">Active learning functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">superintendent</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>API Reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/index.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="data-labelling-widgets">
+<h2>Data labelling widgets<a class="headerlink" href="#data-labelling-widgets" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="superintendent.SemiSupervisor">
+<em class="property">class </em><code class="descclassname">superintendent.</code><code class="descname">SemiSupervisor</code><span class="sig-paren">(</span><em>features=None</em>, <em>labels=None</em>, <em>options=()</em>, <em>classifier=None</em>, <em>display_func=None</em>, <em>eval_method=None</em>, <em>reorder=None</em>, <em>shuffle_prop=0.1</em>, <em>hints=None</em>, <em>keyboard_shortcuts=False</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/semisupervisor.html#SemiSupervisor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.SemiSupervisor" title="Permalink to this definition">¶</a></dt>
+<dd><p>A widget for labelling your data.</p>
+<p>This class is designed to label data for (semi-)supervised learning
+algorithms. It allows you to label data. In the future, it will also allow
+you to re-train an algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, np.ndarray, pd.Series, pd.DataFrame, optional</span></dt>
+<dd><p class="first last">An array or sequence of data in which each element (if 1D) or each row
+(if 2D) represents one data point for which you’d like to generate
+labels.</p>
+</dd>
+<dt><strong>labels</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, np.ndarray, pd.Series, pd.DataFrame, optional</span></dt>
+<dd><p class="first last">If you already have some labels, but would like to re-label some, then
+you can pass these in as labels.</p>
+</dd>
+<dt><strong>options</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple, list</span></dt>
+<dd><p class="first last">The options presented for labelling.</p>
+</dd>
+<dt><strong>display_func</strong> <span class="classifier-delimiter">:</span> <span class="classifier">callable, optional</span></dt>
+<dd><p class="first last">A function that will be used to display the data. This function should
+take in two arguments, first the data to display, and second the number
+of data points to display (set to 1 for this class).</p>
+</dd>
+<dt><strong>classifier</strong> <span class="classifier-delimiter">:</span> <span class="classifier">sklearn.base.ClassifierMixin, optional</span></dt>
+<dd><p class="first last">An object that implements the standard sklearn fit/predict methods. If
+provided, a button for retraining the model is shown, and the model
+performance under k-fold crossvalidation can be read as you go along.</p>
+</dd>
+<dt><strong>eval_method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">callable, optional</span></dt>
+<dd><p class="first last">A function that accepts the classifier, features, and labels as input
+and returns a dictionary of values that contain the key ‘test_score’.
+The default is sklearn.model_selection.cross_validate, with cv=3. Use
+functools.partial to create a function with its parameters fixed.</p>
+</dd>
+<dt><strong>reorder</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, callable, optional</span></dt>
+<dd><p class="first last">One of the reordering algorithms specified in
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">superintendent.prioritisation</span></code>. This describes a function that
+receives input in the shape of n_samples, n_labels and calculates the
+priority in terms of information value in labelling a data point.</p>
+</dd>
+<dt><strong>shuffle_prop</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The proportion of points that are shuffled when the data points are
+re-ordered (see reorder keyword-argument). This controls the
+“exploration vs exploitation” trade-off - the higher, the more you
+explore the feature space randomly, the lower, the more you exploit
+your current weak points.</p>
+</dd>
+<dt><strong>hints</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict, optional</span></dt>
+<dd><p class="first last">A dictionary mapping class labels to example data points from that
+class. Hints are displayed with the same function as the main data, so
+should be in the same format.</p>
+</dd>
+<dt><strong>keyboard_shortcuts</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Whether keyboard shortcuts should be enabled for this widget.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="superintendent.SemiSupervisor.add_features">
+<code class="descname">add_features</code><span class="sig-paren">(</span><em>features</em>, <em>labels=None</em><span class="sig-paren">)</span><a class="headerlink" href="#superintendent.SemiSupervisor.add_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add data to the widget.</p>
+<p>This adds the data provided to the queue of data to be labelled. You
+Can optionally provide labels for each data point.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">Any</span></dt>
+<dd><p class="first last">The data you’d like to add to the labelling widget.</p>
+</dd>
+<dt><strong>labels</strong> <span class="classifier-delimiter">:</span> <span class="classifier">Any, optional</span></dt>
+<dd><p class="first last">The labels for the data you’re adding; if you have labels.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="superintendent.SemiSupervisor.from_images">
+<em class="property">classmethod </em><code class="descname">from_images</code><span class="sig-paren">(</span><em>*args</em>, <em>image_size=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#superintendent.SemiSupervisor.from_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a labelling widget from an image array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd><p class="first last">A numpy array of shape n_images, n_pixels</p>
+</dd>
+<dt><strong>image_size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">The actual size to reshape each row of the features into.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>type</strong></dt>
+<dd><p class="first last">Description of returned object.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="superintendent.SemiSupervisor.retrain">
+<code class="descname">retrain</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/semisupervisor.html#SemiSupervisor.retrain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.SemiSupervisor.retrain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrain the classifier you passed when creating this widget.</p>
+<p>This calls the fit method of your class with the data that you’ve
+labelled. It will also score the classifier and display the
+performance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="superintendent.MultiLabeller">
+<em class="property">class </em><code class="descclassname">superintendent.</code><code class="descname">MultiLabeller</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/multioutput/multilabeller.html#MultiLabeller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.MultiLabeller" title="Permalink to this definition">¶</a></dt>
+<dd><p>A widget for assigning more than one label to each data point.</p>
+<p>This class is designed to label data for (semi-)supervised learning
+algorithms. It allows you to label data. In the future, it will also allow
+you to re-train an algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>connection_string: str</strong></dt>
+<dd><p class="first last">A SQLAlchemy-compatible database connection string. This is where the
+data for this widget will be stored, and where it will be retrieved
+from for labelling.</p>
+</dd>
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, np.ndarray, pd.Series, pd.DataFrame, optional</span></dt>
+<dd><p class="first last">An array or sequence of data in which each element (if 1D) or each row
+(if 2D) represents one data point for which you’d like to generate
+labels.</p>
+</dd>
+<dt><strong>labels</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, np.ndarray, pd.Series, pd.DataFrame, optional</span></dt>
+<dd><p class="first last">If you already have some labels, but would like to re-label some, then
+you can pass these in as labels.</p>
+</dd>
+<dt><strong>options</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple, list</span></dt>
+<dd><p class="first last">The options presented for labelling.</p>
+</dd>
+<dt><strong>classifier</strong> <span class="classifier-delimiter">:</span> <span class="classifier">sklearn.base.ClassifierMixin, optional</span></dt>
+<dd><p class="first last">An object that implements the standard sklearn fit/predict methods. If
+provided, a button for retraining the model is shown, and the model
+performance under k-fold crossvalidation can be read as you go along.</p>
+</dd>
+<dt><strong>display_func</strong> <span class="classifier-delimiter">:</span> <span class="classifier">callable, optional</span></dt>
+<dd><p class="first last">A function that will be used to display the data. This function should
+take in two arguments, first the data to display, and second the number
+of data points to display (set to 1 for this class).</p>
+</dd>
+<dt><strong>eval_method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">callable, optional</span></dt>
+<dd><p class="first last">A function that accepts the classifier, features, and labels as input
+and returns a dictionary of values that contain the key ‘test_score’.
+The default is sklearn.model_selection.cross_validate, with cv=3. Use
+functools.partial to create a function with its parameters fixed.</p>
+</dd>
+<dt><strong>reorder</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, callable, optional</span></dt>
+<dd><p class="first last">One of the reordering algorithms specified in
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">superintendent.prioritisation</span></code>. This describes a function that
+receives input in the shape of n_samples, n_labels and calculates the
+priority in terms of information value in labelling a data point.</p>
+</dd>
+<dt><strong>shuffle_prop</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The proportion of points that are shuffled when the data points are
+re-ordered (see reorder keyword-argument). This controls the
+“exploration vs exploitation” trade-off - the higher, the more you
+explore the feature space randomly, the lower, the more you exploit
+your current weak points.</p>
+</dd>
+<dt><strong>keyboard_shortcuts</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><p class="first last">If you want to enable ipyevent-mediated keyboard capture to use the
+keyboard rather than the mouse to submit data.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="superintendent.MultiLabeller.add_features">
+<code class="descname">add_features</code><span class="sig-paren">(</span><em>features</em>, <em>labels=None</em><span class="sig-paren">)</span><a class="headerlink" href="#superintendent.MultiLabeller.add_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add data to the widget.</p>
+<p>This adds the data provided to the queue of data to be labelled. You
+Can optionally provide labels for each data point.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">Any</span></dt>
+<dd><p class="first last">The data you’d like to add to the labelling widget.</p>
+</dd>
+<dt><strong>labels</strong> <span class="classifier-delimiter">:</span> <span class="classifier">Any, optional</span></dt>
+<dd><p class="first last">The labels for the data you’re adding; if you have labels.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="superintendent.MultiLabeller.from_images">
+<em class="property">classmethod </em><code class="descname">from_images</code><span class="sig-paren">(</span><em>*args</em>, <em>image_size=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#superintendent.MultiLabeller.from_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a labelling widget from an image array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd><p class="first last">A numpy array of shape n_images, n_pixels</p>
+</dd>
+<dt><strong>image_size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">The actual size to reshape each row of the features into.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>type</strong></dt>
+<dd><p class="first last">Description of returned object.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="superintendent.MultiLabeller.retrain">
+<code class="descname">retrain</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/multioutput/multilabeller.html#MultiLabeller.retrain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.MultiLabeller.retrain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrain the classifier you passed when creating this widget.</p>
+<p>This calls the fit method of your class with the data that you’ve
+labelled. It will also score the classifier and display the
+performance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="superintendent.ClusterSupervisor">
+<em class="property">class </em><code class="descclassname">superintendent.</code><code class="descname">ClusterSupervisor</code><span class="sig-paren">(</span><em>features</em>, <em>cluster_indices</em>, <em>representativeness=None</em>, <em>ignore=(-1</em>, <em>)</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/clustersupervisor.html#ClusterSupervisor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.ClusterSupervisor" title="Permalink to this definition">¶</a></dt>
+<dd><p>A widget for labelling clusters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, pd.Series. pd.DataFrame</span></dt>
+<dd><p class="first last">Your features.</p>
+</dd>
+<dt><strong>cluster_indices</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, pd.Series</span></dt>
+<dd><p class="first last">The cluster label for each data point.</p>
+</dd>
+<dt><strong>representativeness</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, pd.Series</span></dt>
+<dd><p class="first last">How representative of a cluster your data points are. This can be the
+probability of cluster membership (as in e.g. HDBSCAN), or cluster
+centrality (as in e.g. K-Means).</p>
+</dd>
+<dt><strong>ignore</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple, list</span></dt>
+<dd><p class="first last">Which clusters should be ignored. By default, this is -1, as most
+clustering algorithms assign -1 to points not in any cluster.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="superintendent.ClusterSupervisor.add_features">
+<code class="descname">add_features</code><span class="sig-paren">(</span><em>features</em>, <em>labels=None</em><span class="sig-paren">)</span><a class="headerlink" href="#superintendent.ClusterSupervisor.add_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add data to the widget.</p>
+<p>This adds the data provided to the queue of data to be labelled. You
+Can optionally provide labels for each data point.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">Any</span></dt>
+<dd><p class="first last">The data you’d like to add to the labelling widget.</p>
+</dd>
+<dt><strong>labels</strong> <span class="classifier-delimiter">:</span> <span class="classifier">Any, optional</span></dt>
+<dd><p class="first last">The labels for the data you’re adding; if you have labels.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="superintendent.ClusterSupervisor.from_images">
+<em class="property">classmethod </em><code class="descname">from_images</code><span class="sig-paren">(</span><em>*args</em>, <em>image_size=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#superintendent.ClusterSupervisor.from_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a labelling widget from an image array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd><p class="first last">A numpy array of shape n_images, n_pixels</p>
+</dd>
+<dt><strong>image_size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">The actual size to reshape each row of the features into.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>type</strong></dt>
+<dd><p class="first last">Description of returned object.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="distributed-data-labelling-widgets">
+<h2>Distributed data labelling widgets<a class="headerlink" href="#distributed-data-labelling-widgets" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="superintendent.distributed.SemiSupervisor">
+<em class="property">class </em><code class="descclassname">superintendent.distributed.</code><code class="descname">SemiSupervisor</code><span class="sig-paren">(</span><em>connection_string=’sqlite:///:memory:’</em>, <em>*args</em>, <em>worker_id=False</em>, <em>table_name=’superintendent’</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/semisupervisor.html#SemiSupervisor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.SemiSupervisor" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class for labelling your data.</p>
+<p>This class is designed to label data for (semi-)supervised learning
+algorithms. It allows you to label data. In the future, it will also allow
+you to re-train an algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>connection_string: str</strong></dt>
+<dd><p class="first last">A SQLAlchemy-compatible database connection string. This is where the
+data for this widget will be stored, and where it will be retrieved
+from for labelling.</p>
+</dd>
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, np.ndarray, pd.Series, pd.DataFrame, optional</span></dt>
+<dd><p class="first last">An array or sequence of data in which each element (if 1D) or each row
+(if 2D) represents one data point for which you’d like to generate
+labels.</p>
+</dd>
+<dt><strong>labels</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, np.ndarray, pd.Series, pd.DataFrame, optional</span></dt>
+<dd><p class="first last">If you already have some labels, but would like to re-label some, then
+you can pass these in as labels.</p>
+</dd>
+<dt><strong>options</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple, list</span></dt>
+<dd><p class="first last">The options presented for labelling.</p>
+</dd>
+<dt><strong>classifier</strong> <span class="classifier-delimiter">:</span> <span class="classifier">sklearn.base.ClassifierMixin, optional</span></dt>
+<dd><p class="first last">An object that implements the standard sklearn fit/predict methods. If
+provided, a button for retraining the model is shown, and the model
+performance under k-fold crossvalidation can be read as you go along.</p>
+</dd>
+<dt><strong>display_func</strong> <span class="classifier-delimiter">:</span> <span class="classifier">callable, optional</span></dt>
+<dd><p class="first last">A function that will be used to display the data. This function should
+take in two arguments, first the data to display, and second the number
+of data points to display (set to 1 for this class).</p>
+</dd>
+<dt><strong>eval_method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">callable, optional</span></dt>
+<dd><p class="first last">A function that accepts the classifier, features, and labels as input
+and returns a dictionary of values that contain the key ‘test_score’.
+The default is sklearn.model_selection.cross_validate, with cv=3. Use
+functools.partial to create a function with its parameters fixed.</p>
+</dd>
+<dt><strong>reorder</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, callable, optional</span></dt>
+<dd><p class="first last">One of the reordering algorithms specified in
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">superintendent.prioritisation</span></code>. This describes a function that
+receives input in the shape of n_samples, n_labels and calculates the
+priority in terms of information value in labelling a data point.</p>
+</dd>
+<dt><strong>shuffle_prop</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The proportion of points that are shuffled when the data points are
+re-ordered (see reorder keyword-argument). This controls the
+“exploration vs exploitation” trade-off - the higher, the more you
+explore the feature space randomly, the lower, the more you exploit
+your current weak points.</p>
+</dd>
+<dt><strong>keyboard_shortcuts</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><p class="first last">If you want to enable ipyevent-mediated keyboard capture to use the
+keyboard rather than the mouse to submit data.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="superintendent.distributed.SemiSupervisor.add_features">
+<code class="descname">add_features</code><span class="sig-paren">(</span><em>features</em>, <em>labels=None</em><span class="sig-paren">)</span><a class="headerlink" href="#superintendent.distributed.SemiSupervisor.add_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add data to the widget.</p>
+<p>This adds the data provided to the queue of data to be labelled. You
+Can optionally provide labels for each data point.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">Any</span></dt>
+<dd><p class="first last">The data you’d like to add to the labelling widget.</p>
+</dd>
+<dt><strong>labels</strong> <span class="classifier-delimiter">:</span> <span class="classifier">Any, optional</span></dt>
+<dd><p class="first last">The labels for the data you’re adding; if you have labels.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="superintendent.distributed.SemiSupervisor.from_images">
+<em class="property">classmethod </em><code class="descname">from_images</code><span class="sig-paren">(</span><em>*args</em>, <em>image_size=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#superintendent.distributed.SemiSupervisor.from_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a labelling widget from an image array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd><p class="first last">A numpy array of shape n_images, n_pixels</p>
+</dd>
+<dt><strong>image_size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">The actual size to reshape each row of the features into.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>type</strong></dt>
+<dd><p class="first last">Description of returned object.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.SemiSupervisor.orchestrate">
+<code class="descname">orchestrate</code><span class="sig-paren">(</span><em>interval_seconds: Optional[int] = 60</em>, <em>interval_n_labels: Optional[int] = 0</em>, <em>shuffle_prop: float = 0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/semisupervisor.html#SemiSupervisor.orchestrate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.SemiSupervisor.orchestrate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Orchestrate the active learning process.</p>
+<p>This method can either re-train the classifier and re-order the data
+once, or it can run a never-ending loop to re-train the model at
+regular intervals, both in time and in the size of labelled data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>interval_seconds</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
+<dd><p class="first last">How often the retraining should occur, in seconds. If this is None,
+the retraining only happens once, then returns (this is suitable)
+if you want the retraining schedule to be maintained e.g. by a cron
+job). The default is 60 seconds.</p>
+</dd>
+<dt><strong>interval_n_labels</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
+<dd><p class="first last">How many new data points need to have been labelled in between runs
+in order for the re-training to occur.</p>
+</dd>
+<dt><strong>shuffle_prop</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">What proportion of the data should be randomly sampled on each re-
+training run.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>None</strong></dt>
+<dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.SemiSupervisor.retrain">
+<code class="descname">retrain</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/semisupervisor.html#SemiSupervisor.retrain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.SemiSupervisor.retrain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrain the classifier you passed when creating this widget.</p>
+<p>This calls the fit method of your class with the data that you’ve
+labelled. It will also score the classifier and display the
+performance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="superintendent.distributed.MultiLabeller">
+<em class="property">class </em><code class="descclassname">superintendent.distributed.</code><code class="descname">MultiLabeller</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/multioutput.html#MultiLabeller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.MultiLabeller" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class for labelling your data.</p>
+<p>This class is designed to label data for (semi-)supervised learning
+algorithms. It allows you to label data. In the future, it will also allow
+you to re-train an algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>connection_string: str</strong></dt>
+<dd><p class="first last">A SQLAlchemy-compatible database connection string. This is where the
+data for this widget will be stored, and where it will be retrieved
+from for labelling.</p>
+</dd>
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, np.ndarray, pd.Series, pd.DataFrame, optional</span></dt>
+<dd><p class="first last">An array or sequence of data in which each element (if 1D) or each row
+(if 2D) represents one data point for which you’d like to generate
+labels.</p>
+</dd>
+<dt><strong>labels</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, np.ndarray, pd.Series, pd.DataFrame, optional</span></dt>
+<dd><p class="first last">If you already have some labels, but would like to re-label some, then
+you can pass these in as labels.</p>
+</dd>
+<dt><strong>options</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple, list</span></dt>
+<dd><p class="first last">The options presented for labelling.</p>
+</dd>
+<dt><strong>classifier</strong> <span class="classifier-delimiter">:</span> <span class="classifier">sklearn.base.ClassifierMixin, optional</span></dt>
+<dd><p class="first last">An object that implements the standard sklearn fit/predict methods. If
+provided, a button for retraining the model is shown, and the model
+performance under k-fold crossvalidation can be read as you go along.</p>
+</dd>
+<dt><strong>display_func</strong> <span class="classifier-delimiter">:</span> <span class="classifier">callable, optional</span></dt>
+<dd><p class="first last">A function that will be used to display the data. This function should
+take in two arguments, first the data to display, and second the number
+of data points to display (set to 1 for this class).</p>
+</dd>
+<dt><strong>eval_method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">callable, optional</span></dt>
+<dd><p class="first last">A function that accepts the classifier, features, and labels as input
+and returns a dictionary of values that contain the key ‘test_score’.
+The default is sklearn.model_selection.cross_validate, with cv=3. Use
+functools.partial to create a function with its parameters fixed.</p>
+</dd>
+<dt><strong>reorder</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, callable, optional</span></dt>
+<dd><p class="first last">One of the reordering algorithms specified in
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">superintendent.prioritisation</span></code>. This describes a function that
+receives input in the shape of n_samples, n_labels and calculates the
+priority in terms of information value in labelling a data point.</p>
+</dd>
+<dt><strong>shuffle_prop</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The proportion of points that are shuffled when the data points are
+re-ordered (see reorder keyword-argument). This controls the
+“exploration vs exploitation” trade-off - the higher, the more you
+explore the feature space randomly, the lower, the more you exploit
+your current weak points.</p>
+</dd>
+<dt><strong>keyboard_shortcuts</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><p class="first last">If you want to enable ipyevent-mediated keyboard capture to use the
+keyboard rather than the mouse to submit data.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="superintendent.distributed.MultiLabeller.add_features">
+<code class="descname">add_features</code><span class="sig-paren">(</span><em>features</em>, <em>labels=None</em><span class="sig-paren">)</span><a class="headerlink" href="#superintendent.distributed.MultiLabeller.add_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add data to the widget.</p>
+<p>This adds the data provided to the queue of data to be labelled. You
+Can optionally provide labels for each data point.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">Any</span></dt>
+<dd><p class="first last">The data you’d like to add to the labelling widget.</p>
+</dd>
+<dt><strong>labels</strong> <span class="classifier-delimiter">:</span> <span class="classifier">Any, optional</span></dt>
+<dd><p class="first last">The labels for the data you’re adding; if you have labels.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="superintendent.distributed.MultiLabeller.from_images">
+<em class="property">classmethod </em><code class="descname">from_images</code><span class="sig-paren">(</span><em>*args</em>, <em>image_size=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#superintendent.distributed.MultiLabeller.from_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a labelling widget from an image array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>features</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd><p class="first last">A numpy array of shape n_images, n_pixels</p>
+</dd>
+<dt><strong>image_size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">The actual size to reshape each row of the features into.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>type</strong></dt>
+<dd><p class="first last">Description of returned object.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.MultiLabeller.orchestrate">
+<code class="descname">orchestrate</code><span class="sig-paren">(</span><em>interval_seconds: Optional[int] = 60</em>, <em>interval_n_labels: Optional[int] = 0</em>, <em>shuffle_prop: float = 0.1</em><span class="sig-paren">)</span><a class="headerlink" href="#superintendent.distributed.MultiLabeller.orchestrate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Orchestrate the active learning process.</p>
+<p>This method can either re-train the classifier and re-order the data
+once, or it can run a never-ending loop to re-train the model at
+regular intervals, both in time and in the size of labelled data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>interval_seconds</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
+<dd><p class="first last">How often the retraining should occur, in seconds. If this is None,
+the retraining only happens once, then returns (this is suitable)
+if you want the retraining schedule to be maintained e.g. by a cron
+job). The default is 60 seconds.</p>
+</dd>
+<dt><strong>interval_n_labels</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
+<dd><p class="first last">How many new data points need to have been labelled in between runs
+in order for the re-training to occur.</p>
+</dd>
+<dt><strong>shuffle_prop</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">What proportion of the data should be randomly sampled on each re-
+training run.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>None</strong></dt>
+<dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="superintendent.distributed.MultiLabeller.retrain">
+<code class="descname">retrain</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/multioutput/multilabeller.html#MultiLabeller.retrain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.MultiLabeller.retrain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrain the classifier you passed when creating this widget.</p>
+<p>This calls the fit method of your class with the data that you’ve
+labelled. It will also score the classifier and display the
+performance.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="active-learning-functions">
+<h2>Active learning functions<a class="headerlink" href="#active-learning-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="superintendent.prioritisation.entropy">
+<code class="descclassname">superintendent.prioritisation.</code><code class="descname">entropy</code><span class="sig-paren">(</span><em>probabilities: numpy.ndarray</em>, <em>shuffle_prop: float = 0.1</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="../_modules/superintendent/prioritisation.html#entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.prioritisation.entropy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort by the entropy of the probabilities (high to low).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>probabilities</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd><p class="first last">An array of probabilities, with the shape n_samples,
+n_classes</p>
+</dd>
+<dt><strong>shuffle_prop</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The proportion of data points that should be randomly shuffled. This
+means the sorting retains some randomness, to avoid biasing your
+new labels and catching any minority classes the algorithm currently
+classifies as a different label.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="superintendent.prioritisation.margin">
+<code class="descclassname">superintendent.prioritisation.</code><code class="descname">margin</code><span class="sig-paren">(</span><em>probabilities</em>, <em>shuffle_prop=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/prioritisation.html#margin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.prioritisation.margin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort by the margin between the top two predictions (low to high).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>probabilities</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd><p class="first last">An array of probabilities, with the shape n_samples,
+n_classes</p>
+</dd>
+<dt><strong>shuffle_prop</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The proportion of data points that should be randomly shuffled. This
+means the sorting retains some randomness, to avoid biasing your
+new labels and catching any minority classes the algorithm currently
+classifies as a different label.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="superintendent.prioritisation.certainty">
+<code class="descclassname">superintendent.prioritisation.</code><code class="descname">certainty</code><span class="sig-paren">(</span><em>probabilities</em>, <em>shuffle_prop=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/prioritisation.html#certainty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.prioritisation.certainty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort by the certainty of the maximum prediction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>probabilities</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd><p class="first last">An array of probabilities, with the shape n_samples,
+n_classes</p>
+</dd>
+<dt><strong>shuffle_prop</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The proportion of data points that should be randomly shuffled. This
+means the sorting retains some randomness, to avoid biasing your
+new labels and catching any minority classes the algorithm currently
+classifies as a different label.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../examples/index.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../distributing-labelling.html" class="btn btn-neutral" title="Distributing labelling across multiple people" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jan Freyberg
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/@jupyter-widgets/html-manager@^0.14.0/dist/embed-amd.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

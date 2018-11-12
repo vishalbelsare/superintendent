@@ -94,6 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../labelling-data.html">Labelling data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../active-learning.html">Active learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../distributing-labelling.html">Distributed labelling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/index.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
 </ul>
 
@@ -176,7 +177,7 @@
 <span class="kn">from</span> <span class="nn">.dbqueue</span> <span class="k">import</span> <span class="n">DatabaseQueue</span>
 
 
-<div class="viewcode-block" id="SemiSupervisor"><a class="viewcode-back" href="../../../api/superintendent.distributed.html#superintendent.distributed.semisupervisor.SemiSupervisor">[docs]</a><span class="k">class</span> <span class="nc">SemiSupervisor</span><span class="p">(</span><span class="n">semisupervisor</span><span class="o">.</span><span class="n">SemiSupervisor</span><span class="p">):</span>
+<div class="viewcode-block" id="SemiSupervisor"><a class="viewcode-back" href="../../../api/index.html#superintendent.distributed.SemiSupervisor">[docs]</a><span class="k">class</span> <span class="nc">SemiSupervisor</span><span class="p">(</span><span class="n">semisupervisor</span><span class="o">.</span><span class="n">SemiSupervisor</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class for labelling your data.</span>
 
@@ -300,7 +301,7 @@
             <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_performance</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">interval_seconds</span><span class="p">)</span>
 
-<div class="viewcode-block" id="SemiSupervisor.orchestrate"><a class="viewcode-back" href="../../../api/superintendent.distributed.html#superintendent.distributed.semisupervisor.SemiSupervisor.orchestrate">[docs]</a>    <span class="k">def</span> <span class="nf">orchestrate</span><span class="p">(</span>
+<div class="viewcode-block" id="SemiSupervisor.orchestrate"><a class="viewcode-back" href="../../../api/index.html#superintendent.distributed.SemiSupervisor.orchestrate">[docs]</a>    <span class="k">def</span> <span class="nf">orchestrate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">interval_seconds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span>
         <span class="n">interval_n_labels</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>

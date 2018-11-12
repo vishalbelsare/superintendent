@@ -94,6 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../labelling-data.html">Labelling data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../active-learning.html">Active learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../distributing-labelling.html">Distributed labelling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
 </ul>
 
@@ -172,7 +173,7 @@
     <span class="k">return</span> <span class="n">data</span>
 
 
-<div class="viewcode-block" id="entropy"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.prioritisation.entropy">[docs]</a><span class="k">def</span> <span class="nf">entropy</span><span class="p">(</span>
+<div class="viewcode-block" id="entropy"><a class="viewcode-back" href="../../api/index.html#superintendent.prioritisation.entropy">[docs]</a><span class="k">def</span> <span class="nf">entropy</span><span class="p">(</span>
     <span class="n">probabilities</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -194,7 +195,7 @@
     <span class="k">return</span> <span class="n">_shuffle_subset</span><span class="p">(</span><span class="n">ordered</span><span class="o">.</span><span class="n">argsort</span><span class="p">(),</span> <span class="n">shuffle_prop</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="margin"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.prioritisation.margin">[docs]</a><span class="k">def</span> <span class="nf">margin</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<div class="viewcode-block" id="margin"><a class="viewcode-back" href="../../api/index.html#superintendent.prioritisation.margin">[docs]</a><span class="k">def</span> <span class="nf">margin</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sort by the margin between the top two predictions (low to high).</span>
 
@@ -217,7 +218,7 @@
     <span class="k">return</span> <span class="n">_shuffle_subset</span><span class="p">(</span><span class="n">ordered</span><span class="o">.</span><span class="n">argsort</span><span class="p">(),</span> <span class="n">shuffle_prop</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="certainty"><a class="viewcode-back" href="../../api/superintendent.html#superintendent.prioritisation.certainty">[docs]</a><span class="k">def</span> <span class="nf">certainty</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<div class="viewcode-block" id="certainty"><a class="viewcode-back" href="../../api/index.html#superintendent.prioritisation.certainty">[docs]</a><span class="k">def</span> <span class="nf">certainty</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sort by the certainty of the maximum prediction.</span>
 
