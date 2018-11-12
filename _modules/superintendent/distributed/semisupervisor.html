@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>superintendent.distributed.semisupervisor &mdash; superintendent 0.3.1 documentation</title>
+  <title>superintendent.distributed.semisupervisor &mdash; superintendent 0.4.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.3.1
+                0.4.0
               </div>
             
           
@@ -93,6 +93,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../labelling-data.html">Labelling data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../active-learning.html">Active learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../distributing-labelling.html">Distributed labelling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
 </ul>
 
@@ -160,6 +161,8 @@
 <span></span><span class="sd">&quot;&quot;&quot;Tools to supervise classification.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>
 <span class="kn">import</span> <span class="nn">traitlets</span>
@@ -280,20 +283,67 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_compose</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_run_orchestration</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">interval_seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">interval_seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+        <span class="n">interval_n_labels</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">shuffle_prop</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">shuffle_prop</span> <span class="o">=</span> <span class="n">shuffle_prop</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">retrain</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_performance</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">interval_seconds</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_last_n_labelled&quot;</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="n">interval_n_labels</span>
+            <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">_labelled_count</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_n_labelled</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_last_n_labelled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">_labelled_count</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shuffle_prop</span> <span class="o">=</span> <span class="n">shuffle_prop</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">retrain</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_performance</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">interval_seconds</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SemiSupervisor.orchestrate"><a class="viewcode-back" href="../../../api/superintendent.distributed.html#superintendent.distributed.semisupervisor.SemiSupervisor.orchestrate">[docs]</a>    <span class="k">def</span> <span class="nf">orchestrate</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">interval_seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">interval_seconds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span>
+        <span class="n">interval_n_labels</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">shuffle_prop</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+        <span class="sd">&quot;&quot;&quot;Orchestrate the active learning process.</span>
+
+<span class="sd">        This method can either re-train the classifier and re-order the data</span>
+<span class="sd">        once, or it can run a never-ending loop to re-train the model at</span>
+<span class="sd">        regular intervals, both in time and in the size of labelled data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        interval_seconds : int, optional</span>
+<span class="sd">            How often the retraining should occur, in seconds. If this is None,</span>
+<span class="sd">            the retraining only happens once, then returns (this is suitable)</span>
+<span class="sd">            if you want the retraining schedule to be maintained e.g. by a cron</span>
+<span class="sd">            job). The default is 60 seconds.</span>
+<span class="sd">        interval_n_labels : int, optional</span>
+<span class="sd">            How many new data points need to have been labelled in between runs</span>
+<span class="sd">            in order for the re-training to occur.</span>
+<span class="sd">        shuffle_prop : float</span>
+<span class="sd">            What proportion of the data should be randomly sampled on each re-</span>
+<span class="sd">            training run.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">interval_seconds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_run_orchestration</span><span class="p">(</span>
-                <span class="n">interval_seconds</span><span class="p">,</span> <span class="n">shuffle_prop</span><span class="o">=</span><span class="n">shuffle_prop</span>
-            <span class="p">)</span></div></div>
+                <span class="n">interval_seconds</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">interval_n_labels</span><span class="o">=</span><span class="n">interval_n_labels</span><span class="p">,</span>
+                <span class="n">shuffle_prop</span><span class="o">=</span><span class="n">shuffle_prop</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_run_orchestration</span><span class="p">(</span>
+                    <span class="n">interval_seconds</span><span class="o">=</span><span class="n">interval_seconds</span><span class="p">,</span>
+                    <span class="n">interval_n_labels</span><span class="o">=</span><span class="n">interval_n_labels</span><span class="p">,</span>
+                    <span class="n">shuffle_prop</span><span class="o">=</span><span class="n">shuffle_prop</span><span class="p">,</span>
+                <span class="p">)</span></div></div>
 </pre></div>
 
            </div>

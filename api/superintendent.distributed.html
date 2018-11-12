@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>superintendent.distributed package &mdash; superintendent 0.3.1 documentation</title>
+  <title>superintendent.distributed package &mdash; superintendent 0.4.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.3.1
+                0.4.0
               </div>
             
           
@@ -93,6 +93,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../labelling-data.html">Labelling data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../active-learning.html">Active learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributing-labelling.html">Distributed labelling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
 </ul>
 
@@ -481,8 +482,42 @@ keyboard rather than the mouse to submit data.</p>
 </table>
 <dl class="method">
 <dt id="superintendent.distributed.semisupervisor.SemiSupervisor.orchestrate">
-<code class="descname">orchestrate</code><span class="sig-paren">(</span><em>interval_seconds: int = 30</em>, <em>shuffle_prop: float = 0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/semisupervisor.html#SemiSupervisor.orchestrate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.semisupervisor.SemiSupervisor.orchestrate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descname">orchestrate</code><span class="sig-paren">(</span><em>interval_seconds: Optional[int] = 60</em>, <em>interval_n_labels: Optional[int] = 0</em>, <em>shuffle_prop: float = 0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/superintendent/distributed/semisupervisor.html#SemiSupervisor.orchestrate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#superintendent.distributed.semisupervisor.SemiSupervisor.orchestrate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Orchestrate the active learning process.</p>
+<p>This method can either re-train the classifier and re-order the data
+once, or it can run a never-ending loop to re-train the model at
+regular intervals, both in time and in the size of labelled data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>interval_seconds</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
+<dd><p class="first last">How often the retraining should occur, in seconds. If this is None,
+the retraining only happens once, then returns (this is suitable)
+if you want the retraining schedule to be maintained e.g. by a cron
+job). The default is 60 seconds.</p>
+</dd>
+<dt><strong>interval_n_labels</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
+<dd><p class="first last">How many new data points need to have been labelled in between runs
+in order for the re-training to occur.</p>
+</dd>
+<dt><strong>shuffle_prop</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">What proportion of the data should be randomly sampled on each re-
+training run.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>None</strong></dt>
+<dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="superintendent.distributed.semisupervisor.SemiSupervisor.worker_id">
