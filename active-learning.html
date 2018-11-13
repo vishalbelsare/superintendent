@@ -369,11 +369,17 @@ data to optimally train a machine learning model.</p>
 <p>This means a human and a machine learning algorithm interact, with the
 human labelling cases the machine learning algorithm is most unsure
 about.</p>
-<p>You label a few cases, train your model, make predictions about the
-unlabelled data, and then label the points for which your model is not
-(yet) producing high-probability predictions.</p>
+<p>A common implementation is what is known as “pool-based” active
+learning: You label a few cases, train your model, make predictions
+about the unlabelled data, and then label the points for which your
+model is not (yet) producing high-probability predictions.</p>
+<p>The rough steps are:</p>
+<div class="figure" id="id1">
+<img alt="Pool-based active learning diagram" src="_images/active-learning-diagram.png" />
+<p class="caption"><span class="caption-text">Pool-based active learning diagram</span></p>
+</div>
 <p>This approach is generally more efficient than labelling data points at
-randon, and it allows you to reach a better model performance faster.</p>
+random, and it allows you to reach a better model performance faster.</p>
 </div>
 <div class="section" id="Active-learning-in-superintendent">
 <h2>Active learning in <code class="docutils literal notranslate"><span class="pre">superintendent</span></code><a class="headerlink" href="#Active-learning-in-superintendent" title="Permalink to this headline">¶</a></h2>
